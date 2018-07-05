@@ -22,7 +22,7 @@ use Bulut\InvoiceService\GetInvoiceViewResponse;
 use Bulut\InvoiceService\SendUBL;
 use Bulut\InvoiceService\SendUBLResponse;
 
-class FITInvoiceService extends  FITHelper {
+class FITInvoiceService {
 
     private static $TEST_URL = "https://efaturawstest.fitbulut.com/ClientEInvoiceServices/ClientEInvoiceServicesPort.svc";
     private static $PROD_URL = "https://efaturaws.fitbulut.com/ClientEInvoiceServices/ClientEInvoiceServicesPort.svc";
