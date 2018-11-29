@@ -20,6 +20,8 @@
       "Bulut\\ArchiveService\\": "src/Bulut/ArchiveService/",
       "Bulut\\eFaturaUBL\\": "src/Bulut/eFaturaUBL/"
     }
-  }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "license": "MIT"
 }
