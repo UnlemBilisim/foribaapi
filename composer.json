@@ -21,7 +21,7 @@
       "Bulut\\eFaturaUBL\\": "src/Bulut/eFaturaUBL/"
     }
   },
-  "minimum-stability": "master",
+  "minimum-stability": "dev-master",
   "prefer-stable": true,
   "license": "MIT"
 }
