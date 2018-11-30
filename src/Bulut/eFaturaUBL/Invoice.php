@@ -57,6 +57,11 @@ class Invoice
     public $InvoiceTypeCode;
 
     /**
+     * @var |Array
+     */
+    public $Note;
+
+    /**
      * @var |String
      */
     public $DocumentCurrencyCode;
@@ -65,11 +70,6 @@ class Invoice
      * @var |String
      */
     public $LineCountNumeric;
-
-    /**
-     * @var |Array
-     */
-    public $Note;
 
     /**
      * @var |Bulut|eFaturaUBL|BillingReference
