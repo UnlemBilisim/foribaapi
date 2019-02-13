@@ -27,6 +27,11 @@ class InvoiceLine
     public $LineExtensionAmount;
 
     /**
+     * @var |Bulut|eFaturaUBL|AllowanceCharge
+     */
+    public $AllowanceCharge;
+    
+    /**
      * @var |Bulut|eFaturaUBL|Item
      */
     public $Item;
@@ -35,11 +40,6 @@ class InvoiceLine
      * @var |Bulut|eFaturaUBL|Price
      */
     public $Price;
-
-    /**
-     * @var |Bulut|eFaturaUBL|AllowanceCharge
-     */
-    public $AllowanceCharge;
 
     /**
      * @var |Bulut|eFaturaUBL|TaxTotal
