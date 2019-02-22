@@ -32,20 +32,21 @@ class InvoiceLine
     public $AllowanceCharge;
     
     /**
+     * @var |Bulut|eFaturaUBL|TaxTotal
+     */
+    public $TaxTotal;
+    
+   /**
      * @var |Bulut|eFaturaUBL|Item
      */
+    
     public $Item;
 
     /**
      * @var |Bulut|eFaturaUBL|Price
      */
+    
     public $Price;
-
-    /**
-     * @var |Bulut|eFaturaUBL|TaxTotal
-     */
-    public $TaxTotal;
-
     /**
      * @var Array
      */
