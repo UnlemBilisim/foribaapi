@@ -55,21 +55,18 @@ class Invoice
      * @var |String
      */
     public $InvoiceTypeCode;
-
-    /**
-     * @var |String
-     */
-    public $DocumentCurrencyCode;
-
-    /**
-     * @var |String
-     */
-    public $LineCountNumeric;
-
     /**
      * @var |Array
      */
     public $Note;
+    /**
+     * @var |String
+     */
+    public $DocumentCurrencyCode;
+    /**
+     * @var |String
+     */
+    public $LineCountNumeric;
 
     /**
      * @var |Bulut|eFaturaUBL|BillingReference
