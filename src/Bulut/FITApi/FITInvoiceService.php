@@ -124,6 +124,12 @@ class FITInvoiceService {
         $soap->registerXPathNamespace('s', 'http://schemas.xmlsoap.org/soap/envelope/');
         if(isset($soap->xpath('//s:Body/s:Fault')[0])){
             $fault = $soap->xpath('//s:Body/s:Fault')[0];
+            if (isset($fault->detail->ProcessingFault))
+			{
+				$p = $fault->detail->ProcessingFault;
+				throw new \Exception($fault->faultstring."(".$fault->faultcode.") : Code: '".$p->Code."', Message: '".$p->Message."'.");
+			}
+
             throw new \Exception("Fatal Error : Code '".$fault->faultcode."', Message '".$fault->faultstring."'.");
         }
         return $soap;

@@ -55,14 +55,17 @@ class Invoice
      * @var |String
      */
     public $InvoiceTypeCode;
+
     /**
      * @var |Array
      */
     public $Note;
+
     /**
      * @var |String
      */
     public $DocumentCurrencyCode;
+
     /**
      * @var |String
      */
