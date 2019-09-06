@@ -6,6 +6,7 @@
  * Time: 00:33
  */
 namespace Bulut\FITApi;
+use Bulut\Exceptions\GlobalForibaException;
 use Bulut\Exceptions\UnauthorizedException;
 use Bulut\InvoiceService\UBLList;
 use GuzzleHttp\Client;
@@ -136,9 +137,11 @@ class FITInvoiceService {
             $fault = $soap->xpath('//s:Body/s:Fault')[0];
 
             if($fault->faultstring == "Unauthorized")
-                new UnauthorizedException($fault->faultstring, $fault->faultcode);
-
-            throw new \Exception("Fatal Error : Code '".$fault->faultcode."', Message '".$fault->faultstring."' [".$responseText."].");
+                throw new UnauthorizedException($fault->faultstring, $fault->faultcode);
+            else if($fault->faultcode == "s:Server")
+                throw new GlobalForibaException($fault->faultstring, $fault->faultcode);
+            else
+                throw new \Exception("Fatal Error : Code '".$fault->faultcode."', Message '".$fault->faultstring."' [".$responseText."].");
         }
         return $soap;
     }
