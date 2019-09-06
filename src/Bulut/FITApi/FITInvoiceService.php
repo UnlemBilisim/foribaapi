@@ -23,6 +23,7 @@ use Bulut\InvoiceService\GetInvoiceView;
 use Bulut\InvoiceService\GetInvoiceViewResponse;
 use Bulut\InvoiceService\SendUBL;
 use Bulut\InvoiceService\SendUBLResponse;
+
 class FITInvoiceService {
     private static $TEST_URL = "https://efaturawstest.fitbulut.com/ClientEInvoiceServices/ClientEInvoiceServicesPort.svc";
     private static $PROD_URL = "https://efaturaws.fitbulut.com/ClientEInvoiceServices/ClientEInvoiceServicesPort.svc";
@@ -42,6 +43,7 @@ class FITInvoiceService {
             </soapenv:Envelope>
     ";
     private $soapSubClassPrefix = "ein";
+
     /**
      * FITInvoiceService constructor.
      * @param array $options
@@ -60,6 +62,7 @@ class FITInvoiceService {
         $this->headers['Authorization'] = "Basic ".$this->getAuth($options['username'], $options['password']);
         $this->client = new Client();
     }
+
     /**
      * @param string $TEST_URL
      */
@@ -67,6 +70,7 @@ class FITInvoiceService {
     {
         self::$TEST_URL = $TEST_URL;
     }
+
     /**
      * @param string $PROD_URL
      */
@@ -74,6 +78,7 @@ class FITInvoiceService {
     {
         self::$PROD_URL = $PROD_URL;
     }
+
     /**
      * @param string $soapXmlPref
      */
@@ -81,6 +86,7 @@ class FITInvoiceService {
     {
         $this->soapXmlPref = $soapXmlPref;
     }
+
     /**
      * @param string $soapSubClassPrefix
      */
@@ -88,9 +94,25 @@ class FITInvoiceService {
     {
         $this->soapSubClassPrefix = $soapSubClassPrefix;
     }
+
+    /**
+     * Basic Auth fonksiyonu.
+     *
+     * @param $username
+     * @param $password
+     * @return string
+     */
     protected function getAuth($username, $password){
         return base64_encode($username.':'.$password);
     }
+
+    /**
+     * Nesneyi SOAP/XML Çeviren sınıf.
+     *
+     * @param $methodName
+     * @param $variables
+     * @return string
+     */
     protected  function makeXml($methodName, $variables){
 
         $subXml = "";
@@ -131,6 +153,17 @@ class FITInvoiceService {
         $mainXml = sprintf($this->soapXmlPref, $treeXml);
         return trim($mainXml);
     }
+
+    /**
+     * Foribadan gelene cevabı işleyen SOAP/XML sınıfı.
+     *
+     * @param $responseText
+     * @return \SimpleXMLElement
+     * @throws GlobalForibaException
+     * @throws SchemaValidationException
+     * @throws UnauthorizedException
+     * @throws \Exception
+     */
     protected  function getXml($responseText){
         $soap = simplexml_load_string($responseText);
         $soap->registerXPathNamespace('s', 'http://schemas.xmlsoap.org/soap/envelope/');
@@ -160,12 +193,20 @@ class FITInvoiceService {
         }
         return $soap;
     }
+
     protected  function fillObj(&$object, $data){
         $vars = get_object_vars($object);
         foreach ($vars as $key => $val){
             $object->{$key} = (string)$data->{$key};
         }
     }
+
+    /**
+     * İstekleri Foriba üzerine iletmeye yardımcı fonksiyon.
+     *
+     * @param $request
+     * @return mixed
+     */
     protected function request($request){
         $get_variables = get_object_vars($request);
         $methodName = $get_variables['methodName'];
@@ -182,9 +223,11 @@ class FITInvoiceService {
         ]);
         return $response->getBody()->getContents();
     }
+
     /**
      * @param GetUserList $request
      * @return array GetUserListResponse
+     * @throws
      */
     public function GetUserListRequest(GetUserList $request) //: GetUserListResponse
     {
@@ -199,9 +242,11 @@ class FITInvoiceService {
         }
         return $list;
     }
+
     /**
      * @param GetUblList $request
      * @return array GetUblListResponse
+     * @throws
      */
     public function GetUblListRequest(GetUblList $request){
         $responseText = $this->request($request);
@@ -216,9 +261,11 @@ class FITInvoiceService {
         }
         return $list;
     }
+
     /**
      * @param GetInvoiceView $request
      * @return GetInvoiceViewResponse
+     * @throws
      */
     public function GetInvoiceViewRequest(GetInvoiceView $request){
         $responseText = $this->request($request);
@@ -231,7 +278,8 @@ class FITInvoiceService {
     }
     /**
      * @param GetUbl $request
-     * @return GetUblResponse
+     * @return array
+     * @throws
      */
     public function GetUblRequest(GetUbl $request){
         $responseText = $this->request($request);
@@ -262,6 +310,7 @@ class FITInvoiceService {
     /**
      * @param GetEnvelopeStatus $request
      * @return array GetEnvelopeResponse
+     * @throws
      */
     public function GetEnvelopeStatusRequest(GetEnvelopeStatus $request){
         $responseText = $this->request($request);
@@ -275,9 +324,11 @@ class FITInvoiceService {
         }
         return $list;
     }
+
     /**
      * @param SendUBL $request
      * @return array SendUBLResponse
+     * @throws
      */
     public function SendUBLRequest(SendUBL $request){
         $responseText = $this->request($request);
