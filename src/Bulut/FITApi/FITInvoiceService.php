@@ -174,19 +174,24 @@ class FITInvoiceService {
                 throw new UnauthorizedException($fault->faultstring, $fault->faultcode);
             else if($fault->faultstring == "Şema validasyon hatası")
             {
-                $message = $soap->xpath('//s:Body/s:Fault/detail/ProcessingFault/Message');
-                if(isset($message[0]))
-                    throw  new SchemaValidationException($message[0]);
+                $message = $soap->xpath('//s:Body/s:Fault/detail');
+                if(isset($message[0])){
+                    throw  new SchemaValidationException($message[0]->ProcessingFault->Message, (int)$message[0]->ProcessingFault->Code);
+                }
                 else
                     throw  new SchemaValidationException('Bilinmeyen bir şema hatası oluştu.');
             }
             else if($fault->faultcode == "s:Server"){
-                $message = $soap->xpath('//s:Body/s:Fault/detail/ProcessingFault/Message');
+                $message = $soap->xpath('//s:Body/s:Fault/detail');
+
                 if(isset($message[0])){
-                    $fault->faultstring = $message;
-                    $fault->faultcode = $soap->xpath('//s:Body/s:Fault/detail/ProcessingFault/Code')[0];
+                    $fault->faultstring = $message[0]->ProcessingFault->Message;
+                    $fault->faultcode = $message[0]->ProcessingFault->Code;
                 }
-                throw new GlobalForibaException($fault->faultstring, $fault->faultcode);
+                if($fault->faultcode == "s:Server")
+                    $fault->faulcode = 0;
+
+                throw new GlobalForibaException($fault->faultstring, (int)$fault->faultcode);
             }
             else
                 throw new \Exception("Fatal Error : Code '".$fault->faultcode."', Message '".$fault->faultstring."' [".$responseText."].");
