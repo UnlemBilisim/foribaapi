@@ -250,7 +250,7 @@ class FITInvoiceService {
      */
     public function GetUblListRequest(GetUblList $request){
         $responseText = $this->request($request);
-        var_dump($responseText);
+
         $soap = $this->getXml($responseText);
         $ublList = $soap->xpath('//s:Body')[0];
         $list = [];
