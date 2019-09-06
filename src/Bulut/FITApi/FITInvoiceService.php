@@ -7,6 +7,7 @@
  */
 namespace Bulut\FITApi;
 use Bulut\Exceptions\GlobalForibaException;
+use Bulut\Exceptions\SchemaValidationException;
 use Bulut\Exceptions\UnauthorizedException;
 use Bulut\InvoiceService\UBLList;
 use GuzzleHttp\Client;
@@ -138,8 +139,22 @@ class FITInvoiceService {
 
             if($fault->faultstring == "Unauthorized")
                 throw new UnauthorizedException($fault->faultstring, $fault->faultcode);
-            else if($fault->faultcode == "s:Server")
+            else if($fault->faultstring == "Şema validasyon hatası")
+            {
+                $message = $soap->xpath('//s:Body/s:Fault/detail/ProcessingFault/Message');
+                if(isset($message[0]))
+                    throw  new SchemaValidationException($message[0]);
+                else
+                    throw  new SchemaValidationException('Bilinmeyen bir şema hatası oluştu.');
+            }
+            else if($fault->faultcode == "s:Server"){
+                $message = $soap->xpath('//s:Body/s:Fault/detail/ProcessingFault/Message');
+                if(isset($message[0])){
+                    $fault->faultstring = $message;
+                    $fault->faultcode = $soap->xpath('//s:Body/s:Fault/detail/ProcessingFault/Code')[0];
+                }
                 throw new GlobalForibaException($fault->faultstring, $fault->faultcode);
+            }
             else
                 throw new \Exception("Fatal Error : Code '".$fault->faultcode."', Message '".$fault->faultstring."' [".$responseText."].");
         }
