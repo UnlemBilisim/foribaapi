@@ -17,7 +17,17 @@ class Item
     public $Name;
 
     /**
+     * @var |Bulut|eFaturaUBL|BuyersItemIdentification
+     */
+    public $BuyersItemIdentification;
+
+    /**
      * @var |Bulut|eFaturaUBL|SellersItemIdentification
      */
     public $SellersItemIdentification;
+
+    /**
+     * @var |Bulut|eFaturaUBL|OriginCountry
+     */
+    public $OriginCountry;
 }

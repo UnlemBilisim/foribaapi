@@ -161,7 +161,8 @@ class FITArchiveService
             $fault = $soap->xpath('//s:Body/s:Fault')[0];
             $fault_array = [];
             $this->xml2array($fault, $fault_array);
-            throw new \Exception("Fatal Error, Code : ".$fault_array['faultcode']." String : ".$fault_array['faultstring'].". Detail : \"".implode('","', $fault_array['detail']["processingFaultType"]).'""');
+            $detail = (isset($fault_array['detail']) ? implode('","', $fault_array['detail']["processingFaultType"]) : '');
+            throw new \Exception("Fatal Error, Code : ".$fault_array['faultcode']." String : ".$fault_array['faultstring'].". Detail : \"".$detail.'""');
         }
         return $soap;
     }

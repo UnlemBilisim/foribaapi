@@ -18,7 +18,8 @@
       "Bulut\\FITApi\\": "src/Bulut/FITApi/",
       "Bulut\\InvoiceService\\": "src/Bulut/InvoiceService/",
       "Bulut\\ArchiveService\\": "src/Bulut/ArchiveService/",
-      "Bulut\\eFaturaUBL\\": "src/Bulut/eFaturaUBL/"
+      "Bulut\\eFaturaUBL\\": "src/Bulut/eFaturaUBL/",
+      "Bulut\\Exceptions\\": "src/Bulut/Exceptions/"
     }
   },
   "minimum-stability": "stable",
