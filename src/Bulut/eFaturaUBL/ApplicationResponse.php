@@ -33,11 +33,6 @@ class ApplicationResponse
     /**
      * @var |String
      */
-    public $CopyIndicator;
-
-    /**
-     * @var |String
-     */
     public $UUID;
 
     /**
@@ -55,6 +50,10 @@ class ApplicationResponse
      */
     public $Note;
 
+    /**
+     * @var |Bulut|eFaturaUBL|Signature
+     */
+    public $Signature;
 
     /**
      * @var |Bulut|eFaturaUBL|SenderParty

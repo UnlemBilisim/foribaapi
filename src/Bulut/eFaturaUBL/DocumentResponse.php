@@ -12,15 +12,18 @@ namespace Bulut\eFaturaUBL;
 class DocumentResponse
 {
     /**
-     * @var |Bulut|eFaturaUBL|LineResponse
+     * @var |Bulut|eFaturaUBL|Response
      */
-    public $LineResponse;
+    public $Response;
+
     /**
      * @var |Bulut|eFaturaUBL|DocumentReference
      */
     public $DocumentReference;
+
     /**
-     * @var |Bulut|eFaturaUBL|Response
+     * @var |Bulut|eFaturaUBL|LineResponse
      */
-    public $Response;
+    public $LineResponse;
+
 }
