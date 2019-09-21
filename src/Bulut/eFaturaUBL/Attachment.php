@@ -8,11 +8,27 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Belgelerde referans verilmek istenen referansların ya da belgelere eklenmek istenen dokümanların yer aldığı elemandır.
+ *
+ * Class Attachment
+ * @package Bulut\eFaturaUBL
+ */
 class Attachment
 {
     /**
-     * @var |Array ( attrs = [mimeCode="application/zip", encodingCode="Base64", characterSetCode="UTF-8", filename="91BD2213-767A-47E4-9C76-5C6F212A637F.zip"])
+     * İlişkilendirilmek istenen dokümanın URI formatında referansını tutar.
+     * Eğer Attachment elemanı, bir “DigitalSignatureAttachment” ise (diğer bir deyişle Signature Elemanının içerisine yeralıyorsa)
+     * External Reference zorunlu bir elemandır.
+     *
+     * @var ExternalReference
+     */
+    public $ExternalReference;
+
+    /**
+     * EmbeddedDocumentBinaryObject: İlişiklendirilmiş dokümanı base64Encoded formatında tutar.
+     *
+     * @var EmbeddedDocumentBinaryObject
      */
     public $EmbeddedDocumentBinaryObject;
 

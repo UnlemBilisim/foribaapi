@@ -8,11 +8,32 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Kalem ile ilgili tanımlayıcı bilgilere bu elemanda yer verilecektir.
+ *
+ * Class LineReference
+ * @package Bulut\eFaturaUBL
+ */
 class LineReference
 {
     /**
-     * @var |String
+     * Kalem Numarası. Kalemin sıra numarası girilecektir.
+     *
+     * @var string
      */
     public $LineID;
+
+    /**
+     * Kalemin durum bilgisi girilebilecektir.
+     *
+     * @var string
+     */
+    public $LineStatusCode;
+
+    /**
+     * Referans Belge
+     *
+     * @var DocumentReference
+     */
+    public $DocumentReference;
 }

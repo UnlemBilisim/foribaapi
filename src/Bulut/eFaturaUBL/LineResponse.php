@@ -8,15 +8,25 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Bir belgenin belli bir kalemine yanıt verilirken bu eleman kullanılabilecektir.
+ *
+ * Class LineResponse
+ * @package Bulut\eFaturaUBL
+ */
 class LineResponse
 {
     /**
-     * @var |Bulut|eFaturaUBL|LineReference
+     * Kalem Bilgisi
+     *
+     * @var LineReference
      */
     public $LineReference;
+
     /**
-     * @var |Bulut|eFaturaUBL|Response
+     * Yanıt
+     *
+     * @var Response
      */
     public $Response;
 }

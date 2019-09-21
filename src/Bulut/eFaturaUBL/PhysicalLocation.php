@@ -8,16 +8,12 @@
 
 namespace Bulut\eFaturaUBL;
 
-
-class PhysicalLocation
+/**
+ * Tarafın var ise depo bilgileri girilir.
+ *
+ * Class PhysicalLocation
+ * @package Bulut\eFaturaUBL
+ */
+class PhysicalLocation extends Location
 {
-    /**
-     * @var |String
-     */
-    public $ID;
-
-    /**
-     * @var |Bulut|eFaturaUBL|Address
-     */
-    public $Address;
 }

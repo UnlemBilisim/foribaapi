@@ -8,26 +8,39 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Hesap bilgilerinin tutulduğu bölümdür.
+ *
+ * Class FinancialAccount
+ * @package Bulut\eFaturaUBL
+ */
 class FinancialAccount
 {
     /**
-     * @var |String
+     * Hesap numarası metin olarak girilir.
+     *
+     * @var string
      */
     public $ID;
 
     /**
-     * @var |String
+     * Hesabın para birimi kodu girilir.
+     *
+     * @var string
      */
     public $CurrencyCode;
 
     /**
-     * @var |String
+     * Ödeme ile ilgili açıklama serbest metin olarak girilir.
+     *
+     * @var string
      */
     public $PaymentNote;
 
     /**
-     * @var \Bulut\eFaturaUBL\FinancialInstitutionBranch
+     * Hesabın bulunduğu banka ve şube bilgileri girilebilir.
+     *
+     * @var FinancialInstitutionBranch
      */
     public $FinancialInstitutionBranch;
 

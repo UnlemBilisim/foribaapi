@@ -171,7 +171,7 @@ class FITInvoiceService {
             $fault = $soap->xpath('//s:Body/s:Fault')[0];
 
             if($fault->faultstring == "Unauthorized")
-                throw new UnauthorizedException($fault->faultstring, $fault->faultcode);
+                throw new UnauthorizedException($fault->faultstring, (int)$fault->faultcode);
             else if($fault->faultstring == "Şema validasyon hatası")
             {
                 $message = $soap->xpath('//s:Body/s:Fault/detail');

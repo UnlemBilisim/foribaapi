@@ -8,12 +8,13 @@
 
 namespace Bulut\eFaturaUBL;
 
-
-class DeliveryContact
+/**
+ * ReceiptAdvice içerisinde kullanımında teslim alan bilgisi girilebilir.
+ *
+ * Class DeliveryContact
+ * @package Bulut\eFaturaUBL
+ */
+class DeliveryContact extends Contact
 {
-    /**
-     * @var |String
-     */
-    public $Name;
 
 }

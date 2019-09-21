@@ -8,7 +8,12 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Tarafın şubesine ait bilgiler bu elemana girilir.
+ *
+ * Class AgentParty
+ * @package Bulut\eFaturaUBL
+ */
 class AgentParty extends Party
 {
 

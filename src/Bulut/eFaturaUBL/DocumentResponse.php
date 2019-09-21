@@ -8,21 +8,33 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Belgelere ilişkin kabul, red ve diğer mesajlar bu elemana girilecektir.
+ *
+ * Class DocumentResponse
+ * @package Bulut\eFaturaUBL
+ */
 class DocumentResponse
 {
     /**
-     * @var |Bulut|eFaturaUBL|Response
+     * Yanıt
+     *
+     * @var Response
      */
     public $Response;
 
     /**
-     * @var |Bulut|eFaturaUBL|DocumentReference
+     * Yanıt verilen belgeye referans bilgisi içermektedir.
+     *
+     * @var DocumentReference
      */
     public $DocumentReference;
 
     /**
-     * @var |Bulut|eFaturaUBL|LineResponse
+     * Satıra yanıt bilgilerini içerir. Dokümanın belli bir kalemi ile ilgili red ve düzeltme talebi olma durumunda
+     * cbc:LineID elemanı ilgili kalem numarasını içerecektir.
+     *
+     * @var LineResponse
      */
     public $LineResponse;
 

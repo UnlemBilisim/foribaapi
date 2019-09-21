@@ -8,17 +8,47 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Siparişe ait bilgiler girilecektir.
+ *
+ * Class OrderReference
+ * @package Bulut\eFaturaUBL
+ */
 class OrderReference
 {
 
     /**
-     * @var |String
+     * Sipariş numarası girilecektir.
+     *
+     * @var string
      */
     public $ID;
 
     /**
-     * @var |String
+     * Satıcının verdiği sipariş numarası girilecektir.
+     *
+     * @var string
+     */
+    public $SalesOrderID;
+
+    /**
+     * Sipariş tarihi girilecektir.
+     *
+     * @var string
      */
     public $IssueDate;
+
+    /**
+     * Sipariş tipi girilecektir.
+     *
+     * @var string
+     */
+    public $OrderTypeCode;
+
+    /**
+     * Ek dökümanlar
+     *
+     * @var DocumentReference
+     */
+    public $DocumentReference;
 }

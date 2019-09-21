@@ -8,11 +8,32 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Taşıma ekipmanı bilgileri girilir.
+ *
+ * Class TransportEquipment
+ * @package Bulut\eFaturaUBL
+ */
 class TransportEquipment
 {
     /**
-     * @var |Array (val = string, attrs = [schemeID="DORSEPLAKA"])
+     * Tekil numarası girilir. Örneğin Dorse Plaka numarası.
+     *
+     * @var array (val = string, attrs = [schemeID="DORSEPLAKA"])
      */
     public $ID;
+
+    /**
+     * Ekipman tipi kodu girilir.
+     *
+     * @var string
+     */
+    public $TransportEquipmentTypeCode;
+
+    /**
+     * Serbest metin açıklama girilir.
+     *
+     * @var string
+     */
+    public $Description;
 }

@@ -9,26 +9,7 @@
 namespace Bulut\eFaturaUBL;
 
 
-class OriginatorDocumentReference
+class OriginatorDocumentReference extends DocumentReference
 {
-    /**
-     * @var |String
-     */
-    public $ID;
-
-    /**
-     * @var |String
-     */
-    public $IssueDate;
-
-    /**
-     * @var |String
-     */
-    public $DocumentDescription;
-
-    /**
-     * @var \Bulut\eFaturaUBL\IssuerParty
-     */
-    public $IssuerParty;
 
 }

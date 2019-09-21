@@ -8,21 +8,40 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Belge üzerinde yer alan vergi türü, muafiyet ve istisnalara ilişkin bilgiler girilir.
+ *
+ * Class TaxCategory
+ * @package Bulut\eFaturaUBL
+ */
 class TaxCategory
 {
     /**
-     * @var |Bulut|eFaturaUBL|TaxScheme
+     * Vergi türü ismi girilebilecektir.
+     *
+     * @var string
      */
-    public $TaxScheme;
+    public $Name;
 
     /**
-     * @var |String
+     * Vergi muafiyet, istisna sebepleri bu alana kodlu olarak girilecektir.
+     *
+     * @var string
      */
     public $TaxExemptionReasonCode;
 
     /**
-     * @var |String
+     * Vergi muafiyet, istisna sebepleri bu alana serbest metin olarak girilecektir.
+     *
+     * @var string
      */
     public $TaxExemptionReason;
+
+    /**
+     * Uygulanan vergi türü hakkında bilgiler girilir.
+     *
+     * @var TaxScheme
+     */
+    public $TaxScheme;
+
 }

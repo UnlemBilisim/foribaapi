@@ -8,16 +8,13 @@
 
 namespace Bulut\eFaturaUBL;
 
-
-class FinancialInstitutionBranch
+/**
+ * Hesabın bulunduğu banka ve şube bilgileri girilebilir.
+ *
+ * Class FinancialInstitutionBranch
+ * @package Bulut\eFaturaUBL
+ */
+class FinancialInstitutionBranch extends Branch
 {
-    /**
-     * @var |String
-     */
-    public $Name;
 
-    /**
-     * @var \Bulut\eFaturaUBL\FinancialInstitution
-     */
-    public $FinancialInstitution;
 }

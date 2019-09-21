@@ -8,7 +8,12 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ *  Merkez bilgilerini içerir.
+ *
+ * Class HeadOfficeParty
+ * @package Bulut\eFaturaUBL
+ */
 class HeadOfficeParty extends Party
 {
 

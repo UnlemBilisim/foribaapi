@@ -8,32 +8,14 @@
 
 namespace Bulut\eFaturaUBL;
 
-
-class LegalMonetaryTotal
+/**
+ * Parasal toplamlar ile genel tutarların girildiği elemandır
+ *
+ * Class LegalMonetaryTotal
+ * @package Bulut\eFaturaUBL
+ */
+class LegalMonetaryTotal extends MonetaryTotal
 {
-    /**
-     * @var |Array (val = string, attrs = [currencyID="TRY"] )
-     */
-    public $LineExtensionAmount;
 
-    /**
-     * @var |Array (val = string, attrs = [currencyID="TRY"] )
-     */
-    public $TaxExclusiveAmount;
-
-    /**
-     * @var |Array (val = string, attrs = [currencyID="TRY"] )
-     */
-    public $TaxInclusiveAmount;
-
-    /**
-     * @var |Array (val = string, attrs = [currencyID="TRY"] )
-     */
-    public $AllowanceTotalAmount;
-
-    /**
-     * @var |Array (val = string, attrs = [currencyID="TRY"] )
-     */
-    public $PayableAmount;
 
 }

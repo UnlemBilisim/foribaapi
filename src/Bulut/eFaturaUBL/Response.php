@@ -8,18 +8,32 @@
 
 namespace Bulut\eFaturaUBL;
 
+/**
+ * Yanıta ait detaylar bu elemanda gösterilecektir
+ *
+ * Class Response
+ * @package Bulut\eFaturaUBL
+ */
 class Response
 {
     /**
-     * @var |String
+     * Response elemanını tekil olarak tanımlayan numaradır.
+     *
+     * @var string
      */
     public $ReferenceID;
+
     /**
-     * @var |String
+     * YanıtKodu
+     *
+     * @var string
      */
     public $ResponseCode;
+
     /**
-     * @var |String
+     * Tanımlama. Yanıt ile ilgili açıklamalar bu elemana serbest metin olarak yazılabilecektir.
+     *
+     * @var string
      */
     public $Description;
 }

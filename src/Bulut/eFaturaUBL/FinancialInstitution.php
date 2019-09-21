@@ -8,11 +8,18 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Banka bilgisi girilebilir.
+ *
+ * Class FinancialInstitution
+ * @package Bulut\eFaturaUBL
+ */
 class FinancialInstitution
 {
     /**
-     * @var |String
+     * Banka ismi girilebilir.
+     *
+     * @var string
      */
     public $Name;
 }

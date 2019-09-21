@@ -8,27 +8,67 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Iskonto veya artırımların tanımlandığı elemandır.
+ * AllowanceChargeReason: Iskonto/ Artırım Nedeni
+ * MultiplierFactorNumeric: Iskonto/ Artırım Oranı
+ * SequenceNumeric: Sıra Numarası
+ * Amount: Iskonto/ Artırım Tutarı
+ * BaseAmount: İskonto veya artırımın uygulandığı tutar
+ * PerUnitAmount: Ürün adetine göre iskonto veya artırımın uygulandığı durumlarda uygulanan ürün miktarını gösterir
+ *
+ * Class AllowanceCharge
+ * @package Bulut\eFaturaUBL
+ */
 class AllowanceCharge
 {
     /**
-     * @var |String
+     * Iskonto ise “false”, artırım ise “true” girilir.
+     *
+     * @var boolean
      */
     public $ChargeIndicator;
 
     /**
-     * @var |String
+     * Iskonto veya artırımın sebebi serbest metin olarak girilir.
+     *
+     * @var string
+     */
+    public $AllowanceChargeReason;
+
+    /**
+     * Iskonto veya artırım oranı numerik olarak girilir.
+     *
+     * @var string
      */
     public $MultiplierFactorNumeric;
 
     /**
-     * @var |Array (val = string, attrs = [currencyID="TRY"] )
+     * Birden fazla iskonto veya fiyat artırımı kullanılması durumunda sıra numarası girilir.
+     *
+     * @var integer
+     */
+    public $SequenceNumeric;
+
+    /**
+     * Iskonto veya artırım miktarı numerik girilir.
+     *
+     * @var Amount
      */
     public $Amount;
 
     /**
-     * @var |Array (val = string, attrs = [currencyID="TRY"] )
+     * Iskonto veya artırım oranının uygulandığı tutar girilir.
+     *
+     * @var BaseAmount
      */
     public $BaseAmount;
+
+    /**
+     * Ürün adetine göre iskonto veya artırımın uygulandığı durumlarda uygulanan ürün miktarını gösterir
+     *
+     * @var integer
+     */
+    public $PerUnitAmount;
 
 }

@@ -8,11 +8,18 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Bu alana UBLExtensions alanına eklenen dijital imzaya referans eklenecektir.
+ *
+ * Class DigitalSignatureAttachment
+ * @package Bulut\eFaturaUBL
+ */
 class DigitalSignatureAttachment
 {
     /**
-     * @var |Bulut|eFaturaUBL|ExternalReference
+     * Referans Bilgisi
+     * Stowage
+     * @var ExternalReference
      */
     public $ExternalReference;
 }

@@ -8,11 +8,32 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Teslimat koşulları girilir.
+ *
+ * Class DeliveryTerms
+ * @package Bulut\eFaturaUBL
+ */
 class DeliveryTerms
 {
     /**
-     * @var |Array (val = string, attrs = [schemeID="INCOTERMS"] )
+     * Teslim koşulları girilir (örneğin CIF, FOB).
+     *
+     * @var string
      */
     public $ID;
+
+    /**
+     * Teslimat koşulları serbest metin olarak girilir.
+     *
+     * @var string
+     */
+    public $SpecialTerms;
+
+    /**
+     * Teslimat koşullarının kapsadığı tutar girilebilir
+     *
+     * @var float
+     */
+    public $Amount;
 }

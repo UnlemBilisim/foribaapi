@@ -8,11 +8,12 @@
 
 namespace Bulut\eFaturaUBL;
 
-
-class SellersItemIdentification
+/**
+ * Satıcının mal/hizmete verdiği tanımlama bilgisi girilir.
+ *
+ * Class SellersItemIdentification
+ * @package Bulut\eFaturaUBL
+ */
+class SellersItemIdentification extends ItemIdentification
 {
-    /**
-     * @var |String
-     */
-    public $ID;
 }

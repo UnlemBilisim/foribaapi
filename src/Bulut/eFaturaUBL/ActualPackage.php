@@ -8,22 +8,12 @@
 
 namespace Bulut\eFaturaUBL;
 
-
-class ActualPackage
+/**
+ * İçerdiği paket bilgileri girilir.
+ *
+ * Class ActualPackage
+ * @package Bulut\eFaturaUBL
+ */
+class ActualPackage extends Package
 {
-    /**
-     * @var |String
-     */
-    public $ID;
-
-    /**
-     * @var |String
-     */
-    public $Quantity;
-
-    /**
-     * @var |String
-     */
-    public $PackagingTypeCode;
-
 }

@@ -8,62 +8,91 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Tarafları (kurum ve şahıslar) tanımlamak için kullanılır.
+ *
+ * Class Party
+ * @package Bulut\eFaturaUBL
+ */
 class Party
 {
     /**
-     * @var |String
-     */
-    public $EndpointID;
-
-    /**
-     * @var |String
+     * Tarafın web sayfası adresi metin olarak girilir.
+     *
+     * @var string
      */
     public $WebsiteURI;
 
     /**
-     * @var |Bulut|eFaturaUBL|PartyIdentification
+     * Tarafın ana faaliyet (NACE) kodu girilecektir.
+     *
+     * @var string
+     */
+    public $IndustryClassificationCode;
+
+    /**
+     * Tarafın vergi kimlik numarası veya TC kimlik numarası metin olarak girilir.
+     *
+     * @var PartyIdentification
      */
     public $PartyIdentification;
 
     /**
-     * @var |Bulut|eFaturaUBL|PartyName
+     * Taraf eğer kurum ise kurum ismi bu elemana metin olarak girilir.
+     *
+     * @var PartyName
      */
     public $PartyName;
 
     /**
-     * @var |Bulut|eFaturaUBL|PostalAddress
+     * Tarafın adresi girilir.
+     *
+     * @var PostalAddress
      */
     public $PostalAddress;
 
     /**
-     * @var |Bulut|eFaturaUBL|PartyTaxScheme
-     */
-    public $PartyTaxScheme;
-
-    /**
-     * @var |Bulut|eFaturaUBL|Contact
-     */
-    public $Contact;
-
-    /**
-     * @var |Bulut|eFaturaUBL|PhysicalLocation
+     * Tarafın var ise depo bilgileri girilir.
+     *
+     * @var PostalAddress
      */
     public $PhysicalLocation;
 
     /**
-     * @var \Bulut\eFaturaUBL\PartyLegalEntity
+     * Tarafın vergi kimlik numarası girilmişse bu alana vergi dairesi adı girilir.
+     *
+     * @var PartyTaxScheme
+     */
+    public $PartyTaxScheme;
+
+    /**
+     * Tarafın diğer kayıtlı olduğu yerlerin bilgileri ve kayıtlı olduğu yerlerdeki kayıt numaraları detaylı olarak girilecektir.
+     *
+     * @var PartyLegalEntity
      */
     public $PartyLegalEntity;
 
     /**
-     * @var \Bulut\eFaturaUBL\AgentParty
+     * Tarafın iletişim bilgileri girilir.
+     *
+     * @var Contact
+     */
+    public $Contact;
+
+    /**
+     * Taraf eğer şahıssa bu eleman kullanılır.
+     *
+     * @var Person
+     */
+    public $Person;
+
+    /**
+     * Tarafın şubesine ait bilgiler bu elemana girilir.
+     *
+     * @var AgentParty
      */
     public $AgentParty;
 
 
-    /**
-     * @var \Bulut\eFaturaUBL\Person
-     */
-    public $Person;
 }
+

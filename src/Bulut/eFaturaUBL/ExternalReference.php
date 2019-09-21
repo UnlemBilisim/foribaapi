@@ -8,11 +8,18 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ *  İlişkilendirilmek istenen dokümanın URI formatında referansını tutar.
+ *
+ * Class ExternalReference
+ * @package Bulut\eFaturaUBL
+ */
 class ExternalReference
 {
     /**
-     * @var |String
+     * Dökümanın URI adresi.
+     *
+     * @var string
      */
     public $URI;
 }

@@ -8,26 +8,12 @@
 
 namespace Bulut\eFaturaUBL;
 
-
-class DriverPerson
+/**
+ * Şoför bilgileri girilir.
+ *
+ * Class DriverPerson
+ * @package Bulut\eFaturaUBL
+ */
+class DriverPerson extends Person
 {
-    /**
-     * @var |String
-     */
-    public $FirstName;
-
-    /**
-     * @var |String
-     */
-    public $FamilyName;
-
-    /**
-     * @var |String
-     */
-    public $Title;
-
-    /**
-     * @var |String
-     */
-    public $NationalityID;
 }

@@ -9,6 +9,16 @@
 namespace Bulut\FITApi;
 
 
+use Bulut\ArchiveService\GetReportData;
+use Bulut\ArchiveService\GetReportDataResponse;
+use Bulut\ArchiveService\GetReportList;
+use Bulut\ArchiveService\GetReportListRequest;
+use Bulut\ArchiveService\GetReportListResponse;
+use Bulut\ArchiveService\GetReportStatus;
+use Bulut\ArchiveService\GetReportStatusResponse;
+use Bulut\Exceptions\GlobalForibaException;
+use Bulut\Exceptions\SchemaValidationException;
+use Bulut\Exceptions\UnauthorizedException;
 use GuzzleHttp\Client;
 use Bulut\ArchiveService\CancelInvoice;
 use Bulut\ArchiveService\CancelInvoiceResponse;
@@ -155,15 +165,31 @@ class FITArchiveService
     }
 
     private function getXml($responseText){
+
         $soap = simplexml_load_string($responseText);
         $soap->registerXPathNamespace('s', 'http://schemas.xmlsoap.org/soap/envelope/');
-        if(isset($soap->xpath('//s:Body/s:Fault')[0])){
+
+        if(isset($soap->xpath('//s:Body/s:Fault')[0]))
+        {
             $fault = $soap->xpath('//s:Body/s:Fault')[0];
             $fault_array = [];
             $this->xml2array($fault, $fault_array);
+
+            if($fault->faultstring == "Unauthorized")
+                throw new UnauthorizedException($fault_array['faultstring'], (int)$fault_array['faultcode']);
+            else if($fault->faultstring == "Şema validasyon hatası")
+            {
+                if(isset($fault_array['detail'])){
+                    throw new SchemaValidationException(implode('","', $fault_array['detail']["processingFaultType"]));
+                }
+                else
+                    throw new SchemaValidationException('Bilinmeyen bir şema hatası oluştu.');
+            }
+
             $detail = (isset($fault_array['detail']) ? implode('","', $fault_array['detail']["processingFaultType"]) : '');
-            throw new \Exception("Fatal Error, Code : ".$fault_array['faultcode']." String : ".$fault_array['faultstring'].". Detail : \"".$detail.'""');
+            throw new GlobalForibaException("Fatal Error, Code : ".$fault_array['faultcode']." String : ".$fault_array['faultstring'].". Detail : \"".$detail.'""');
         }
+
         return $soap;
     }
 
@@ -218,7 +244,6 @@ class FITArchiveService
             $xmlMake = str_replace(['get:', ':get'],['inv:', ':inv'], $xmlMake);
         }
 
-
         if(get_class($request) == SendInvoice::class){
             $xmlMake = str_replace(['get:', ':get'],['inv:', ':inv'], $xmlMake);
         }
@@ -228,12 +253,13 @@ class FITArchiveService
         }
 
 
+         var_dump($xmlMake);
+
         $response = $this->client->request('POST', self::$URL, [
             'headers' => $this->headers,
             'body' => $xmlMake,
             'http_errors' => false
         ]);
-
         return $response->getBody()->getContents();
     }
 
@@ -303,6 +329,53 @@ class FITArchiveService
         $responseData = $soap->xpath('//s:Body')[0];
         $responseObj = new SendEnvelopeResponse();
         $this->fillObj($responseObj, $responseData->sendInvoiceResponseType);
+
+        return $responseObj;
+    }
+
+    public function GetReportList(GetReportList $request){
+        $responseText = $this->request($request);
+        $soap = $this->getXml($responseText);
+        $responseData = $soap->xpath('//s:Body')[0];
+
+        $responseObj = new GetReportListResponse();
+        $this->fillObj($responseObj, $responseData->getReportListResponse);
+
+        unset($responseObj->Reports->uuid);
+        unset($responseObj->Reports->tcknVkn);
+        unset($responseObj->Reports->periodCode);
+        unset($responseObj->Reports->sectionStartDate);
+        unset($responseObj->Reports->sectionEndDate);
+        unset($responseObj->Reports->partNumber);
+        unset($responseObj->Reports->invoiceCount);
+        unset($responseObj->Reports->invoiceTotalAmount);
+        unset($responseObj->Reports->cancelInvoiceCount);
+        unset($responseObj->Reports->calcelInvoiceTotalAmount);
+        unset($responseObj->Reports->gibStatus);
+
+        return $responseObj;
+    }
+
+    public function GetReportData(GetReportData $request){
+        $responseText = $this->request($request);
+
+        $soap = $this->getXml($responseText);
+        $responseData = $soap->xpath('//s:Body')[0];
+
+        $responseObj = new GetReportDataResponse();
+        $this->fillObj($responseObj, $responseData->getReportDataResponse);
+
+        return $responseObj;
+    }
+
+    public function GetReportStatus(GetReportStatus $request){
+        $responseText = $this->request($request);
+
+        $soap = $this->getXml($responseText);
+        $responseData = $soap->xpath('//s:Body')[0];
+
+        $responseObj = new GetReportStatusResponse();
+        $this->fillObj($responseObj, $responseData->getReportStatusResponseType);
 
         return $responseObj;
     }

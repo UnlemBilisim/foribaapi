@@ -7,7 +7,7 @@
  */
 session_start();
 
-require 'vendor/autoload.php';
+require '../src/autoload.php';
 require 'Code.php';
 
 

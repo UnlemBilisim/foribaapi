@@ -8,41 +8,117 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Ürün tesliman bilgileri detaylı olarak girilir.
+ *
+ * Class Delivery
+ * @package Bulut\eFaturaUBL
+ */
 class Delivery
 {
     /**
-     * @var |String
+     * Teslimatı belge içerisinde tekil olarak tanımlar.
+     *
+     * @var string
+     */
+    public $ID;
+
+    /**
+     * Ürün miktarı girilir.
+     *
+     * @var string
+     */
+    public $Quantity;
+
+    /**
+     * Gerçekleşen teslim tarihi yazılır.
+     *
+     * @var string
      */
     public $ActualDeliveryDate;
 
     /**
-     * @var |String
+     * Gerçekleşen teslim zamanı yazılır.
+     *
+     * @var string
      */
     public $ActualDeliveryTime;
 
     /**
-     * @var |Bulut|eFaturaUBL|CarrierParty
+     * Son teslim tarihi girilir.
+     *
+     * @var string
      */
-    public $CarrierParty;
+    public $LatestDeliveryDate;
 
     /**
-     * @var |Bulut|eFaturaUBL|Despatch
+     * Son teslim zamanı girilir.
+     *
+     * @var string
      */
-    public $Despatch;
+    public $LatestDeliveryTime;
 
     /**
-     * @var \Bulut\eFaturaUBL\DeliveryAddress
+     * Takip numarası girilir.
+     *
+     * @var string
+     */
+    public $TrackingID;
+
+    /**
+     * Teslimat adresi girilir.
+     *
+     * @var DeliveryAddress
      */
     public $DeliveryAddress;
 
     /**
-     * @var \Bulut\eFaturaUBL\DeliveryTerms
+     * Alternatif teslim yeri girilir
+     *
+     * @var AlternativeDeliveryLocation
+     */
+    public $AlternativeDeliveryLocation;
+
+    /**
+     * Tahmini teslim dönemi girilir.
+     *
+     * @var EstimatedDeliveryPeriod
+     */
+    public $EstimatedDeliveryPeriod;
+
+    /**
+     * Taşıyıcı taraf girilir.
+     *
+     * @var CarrierParty
+     */
+    public $CarrierParty;
+
+    /**
+     * Teslimat yapılacak (ürünleri teslim alacak) taraf girilir.
+     *
+     * @var DeliveryParty
+     */
+    public $DeliveryParty;
+
+    /**
+     * Gönderi bilgisi girilir.
+     *
+     * @var Despatch
+     */
+    public $Despatch;
+
+    /**
+     *  Teslimat şartları girilir.
+     *
+     * @var DeliveryTerms
      */
     public $DeliveryTerms;
 
     /**
-     * @var \Bulut\eFaturaUBL\Shipment
+     * Yük/kargo bilgileri girilir.
+     *
+     * @var Shipment
      */
     public $Shipment;
+
 }

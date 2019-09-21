@@ -8,41 +8,81 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Bu elemanda irsaliyede yer alan gönderilere ait bilgiler yer alacaktır
+ *
+ * Class DespatchLine
+ * @package Bulut\eFaturaUBL
+ */
 class DespatchLine
 {
     /**
-     * @var |String
+     * İrsaliye kalemi numarası girilir.
+     *
+     * @var string
      */
     public $ID;
 
     /**
-     * @var |Array (val = string, attrs = [unitCode="C62"] )
+     * Kalem ile ilgili açıklama girilir.
+     *
+     * @var string
+     */
+    public $Note;
+
+    /**
+     * Gönderimi gerçekleştirilen mal adedi girilir.
+     *
+     * @var array (val = string, attrs = [unitCode="C62"] )
      */
     public $DeliveredQuantity;
 
     /**
-     * @var |Array (val = string, attrs = [unitCode="C62"] )
+     * İleriki bir tarihte gönderilecek mal adedi bilgisi girilir.
+     *
+     * @var array (val = string, attrs = [unitCode="C62"] )
      */
     public $OutstandingQuantity;
 
     /**
-     * @var |String
+     * İleriki tarihte gönderilecek malın sebebi girilir.
+     *
+     * @var string
      */
     public $OutstandingReason;
 
     /**
-     * @var |Bulut|eFaturaUBL|OrderLineReference
+     * Fazla miktarda gönderilen malın adedi girilir.
+     *
+     * @var array (val = string, attrs = [unitCode="C62"] )
+     */
+    public $OversupplyQuantity;
+
+    /**
+     * İlgili sipariş dokümanı kalemine referans girilir.
+     *
+     * @var OrderLineReference
      */
     public $OrderLineReference;
 
     /**
-     * @var |Bulut|eFaturaUBL|Item
+     * İlgili dokümanlara referans girilir.
+     *
+     * @var DocumentReference
+     */
+    public $DocumentReference;
+
+    /**
+     * Mal bilgisi girilir.
+     *
+     * @var Item
      */
     public $Item;
 
     /**
-     * @var |Bulut|eFaturaUBL|Shipment
+     * Ürün birim fiyatı bilgisi girilir.
+     *
+     * @var Shipment
      */
     public $Shipment;
 }

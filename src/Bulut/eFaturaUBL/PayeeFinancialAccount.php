@@ -8,21 +8,13 @@
 
 namespace Bulut\eFaturaUBL;
 
-
-class PayeeFinancialAccount
+/**
+ * Ödeme yapılacak hesap girilir.
+ *
+ * Class PayeeFinancialAccount
+ * @package Bulut\eFaturaUBL
+ */
+class PayeeFinancialAccount extends FinancialAccount
 {
-    /**
-     * @var |String
-     */
-    public $ID;
 
-    /**
-     * @var |String
-     */
-    public $CurrencyCode;
-
-    /**
-     * @var \Bulut\eFaturaUBL\FinancialInstitutionBranch
-     */
-    public $FinancialInstitutionBranch;
 }

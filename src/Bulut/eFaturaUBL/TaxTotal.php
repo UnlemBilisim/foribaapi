@@ -8,17 +8,27 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Vergi ve diğer yasal yükümlülüklerin hesaplaması ile ilgili bilgiler ile belge
+ * üzerinde hesaplanan toplam vergi ve yasal yükümlülük tutarı girilecektir.
+ *
+ * Class TaxTotal
+ * @package Bulut\eFaturaUBL
+ */
 class TaxTotal
 {
 
     /**
-     * @var |String
+     * Hesaplanan vergilerin toplam tutarı girilir.
+     *
+     * @var string
      */
     public $TaxAmount;
 
     /**
-     * @var |Bulut|eFaturaUBL|TaxSubtotal
+     * Vergi hesaplaması ile ilgili bilgilere yer verilir.
+     *
+     * @var TTransportEquipmentaxSubtotal
      */
     public $TaxSubtotal;
 }

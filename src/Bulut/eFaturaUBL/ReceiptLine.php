@@ -8,56 +8,123 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Bu elemanda teslim alınan mal hakkında bilgiler yer alacaktır.
+ *
+ * Class ReceiptLine
+ * @package Bulut\eFaturaUBL
+ */
 class ReceiptLine
 {
     /**
-     * @var |String
+     * Kalem numarası girilir.
+     *
+     * @var string
      */
     public $ID;
 
     /**
-     * @var |Array (val = string, attrs = [unitCode="C62"] )
+     * Kalem açıklaması girilir.
+     *
+     * @var array
+     */
+    public $Note;
+
+    /**
+     * Teslim alınan mal adedi girilir.
+     *
+     * @var array (val = string, attrs = [unitCode="C62"] )
      */
     public $ReceivedQuantity;
 
     /**
-     * @var |Array (val = string, attrs = [unitCode="C62"] )
-     */
-    public $RejectedQuantity;
-
-    /**
-     * @var |Array (val = string, attrs = [unitCode="C62"] )
+     * Eksik olan mal adedi girilir.
+     *
+     * @var array (val = string, attrs = [unitCode="C62"] )
      */
     public $ShortQuantity;
 
     /**
-     * @var |Array (val = string, attrs = [unitCode="C62"] )
+     * Kabul edilmeyen mal adedi girilir.
+     *
+     * @var array (val = string, attrs = [unitCode="C62"] )
      */
-    public $OversupplyQuantity;
+    public $RejectedQuantity;
 
     /**
-     * @var |String
+     * Reddedilme sebebi kodu girilir.
+     *
+     * @var string
+     */
+    public $RejectReasonCode;
+
+    /**
+     * Reddedilme sebebi açıklaması girilir.
+     *
+     * @var string
      */
     public $RejectReason;
 
     /**
-     * @var |String
+     * Fazla teslim alınan mal adedi girilir.
+     *
+     * @var array (val = string, attrs = [unitCode="C62"] )
+     */
+    public $OversupplyQuantity;
+
+    /**
+     * Teslim alma tarihi girilir.
+     *
+     * @var string
+     */
+    public $ReceivedDate;
+
+    /**
+     * Geç teslim edilmesi durumunda şikayet kodlu olarak girilir.
+     *
+     * @var string
+     */
+    public $TimingComplaintCode;
+
+    /**
+     * Geç teslim edilmesi durumunda şikayet açıklaması girilir.
+     *
+     * @var string
      */
     public $TimingComplaint;
 
     /**
-     * @var |Bulut|eFaturaUBL|OrderLineReference
+     * İlgili sipariş dokümanı kalemi bilgisi girilir.
+     *
+     * @var OrderLineReference
      */
     public $OrderLineReference;
 
     /**
-     * @var |Bulut|eFaturaUBL|DespatchLineReference
+     *  İlgili irsaliye dokümanı kalemi girilir.
+     *
+     * @var DespatchLineReference
      */
     public $DespatchLineReference;
 
     /**
-     * @var |Bulut|eFaturaUBL|Item
+     *  İlgili dokümanların bilgisi girilir.
+     *
+     * @var DocumentReference
+     */
+    public $DocumentReference;
+
+    /**
+     * Teslim alınan mal bilgisi girilir.
+     *
+     * @var Item
      */
     public $Item;
+
+    /**
+     *  Mal birim fiyatı girilir.
+     *
+     * @var Shipment
+     */
+    public $Shipment;
 }

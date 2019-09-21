@@ -8,7 +8,12 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Tarafın vergi kimlik numarası veya TC kimlik numarası metin olarak girilir.
+ *
+ * Class PartyIdentification
+ * @package Bulut\eFaturaUBL
+ */
 class PartyIdentification
 {
     /**

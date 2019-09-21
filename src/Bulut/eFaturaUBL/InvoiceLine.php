@@ -8,49 +8,114 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Belgede geçen mal/hizmete ilişkin bilgilerin girildiği elemandır.
+ *
+ * Class InvoiceLine
+ * @package Bulut\eFaturaUBL
+ */
 class InvoiceLine
 {
     /**
-     * @var |String
+     *  Kalem sıra numarası girilir.
+     *
+     * @var string
      */
     public $ID;
 
     /**
-     * @var |String
+     * Kalem hakkında açıklama serbest metin olarak girilir.
+     *
+     * @var array
+     */
+    public $Note;
+
+    /**
+     * Mal/hizmet miktarı birimi ile birlikte girilir.
+     *
+     * @var string
      */
     public $InvoicedQuantity;
 
     /**
-     * @var |Array (val = string, attrs = [currencyID="TRY"] )
+     * Fatura ile ilişkili sipariş dokümanının kalemlerine referans atmak için kullanılır.
+     *
+     * @var OrderLineReference
+     */
+    public $OrderLineReference;
+
+    /**
+     * Fatura ile ilişkili irsaliye dokümanının kalemlerine referans atmak için kullanılır.
+     *
+     * @var DespatchLineReference
+     */
+    public $DespatchLineReference;
+
+    /**
+     * Fatura ile ilişkili alındı dokümanının kalemlerine referans atmak için kullanılır.
+     *
+     * @var ReceiptLineReference
+     */
+    public $ReceiptLineReference;
+
+    /**
+     * Kalem bazlı teslimat olması durumunda bu eleman doldurulur.
+     *
+     * @var Delivery
+     */
+    public $Delivery;
+
+    /**
+     * Mal/hizmet miktarı ile Mal/hizmet birim fiyatının çarpımı ile bulunan tutardır (varsa iskonto düşülür)
+     *
+     * @var array (val = string, attrs = [currencyID="TRY"] )
      */
     public $LineExtensionAmount;
 
     /**
-     * @var |Bulut|eFaturaUBL|AllowanceCharge
+     * Kalem bazlı ıskonto/artırım tutarıdır.
+     *
+     * @var AllowanceCharge
      */
     public $AllowanceCharge;
     
     /**
-     * @var |Bulut|eFaturaUBL|TaxTotal
+     * Kalem bazlı vergi bilgilerinin girildiği elemandır.
+     *
+     * @var TaxTotal
      */
     public $TaxTotal;
+
+    /**
+     * Kalem bazlı tevkifat uygulanması durumunda bu eleman kullanılır.
+     *
+     * @var WithholdingTaxTotal
+     */
+    public $WithholdingTaxTotal;
     
    /**
-     * @var |Bulut|eFaturaUBL|Item
+    *  Mal/hizmet hakkında bilgiler buraya girilir.
+    *
+     * @var Item
      */
     
     public $Item;
 
     /**
-     * @var |Bulut|eFaturaUBL|Price
+     * Mal/hizmet birim fiyatı hakkında bilgiler buraya girilir.
+     *
+     * @var Price
      */
     
     public $Price;
+
     /**
-     * @var Array
+     * Eğer ürün için ek bir birim kodu kullanılması gerekiyorsa bu elemanın içindeki InvoicedQuantity elemanı (diğer opsyonel elemanlar boş bırakılarak) kullanılabilir.
+     *
+     * @var SubInvoiceLine
      */
-    public $Note;
+    public $SubInvoiceLine;
+
 
 
 }

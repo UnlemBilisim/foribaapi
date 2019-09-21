@@ -8,16 +8,12 @@
 
 namespace Bulut\eFaturaUBL;
 
-
-class IdentityDocumentReference
+/**
+ * Şahsın kimlik dokümanına (Örneğin pasaport numarası buraya yazılacaktır) referans girilebilecektir.
+ *
+ * Class IdentityDocumentReference
+ * @package Bulut\eFaturaUBL
+ */
+class IdentityDocumentReference extends DocumentReference
 {
-    /**
-     * @var |String
-     */
-    public $ID;
-
-    /**
-     * @var |String
-     */
-    public $IssueDate;
 }

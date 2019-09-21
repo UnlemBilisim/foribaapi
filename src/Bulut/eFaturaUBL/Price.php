@@ -8,11 +8,16 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Mal/hizmetin birim fiyatı girilir
+ *
+ * Class Price
+ * @package Bulut\eFaturaUBL
+ */
 class Price
 {
     /**
-     * @var |Array (val = string, attrs = [currencyID="TRY"] )
+     * @var array (val = string, attrs = [currencyID="TRY"] )
      */
     public $PriceAmount;
 

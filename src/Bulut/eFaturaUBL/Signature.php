@@ -8,21 +8,32 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Bu elemana belgelerde kullanılan mali mühür/elektronik imza ile ilgili bilgiler girilir.
+ *
+ * Class Signature
+ * @package Bulut\eFaturaUBL
+ */
 class Signature
 {
     /**
-     * @var |String
+     * Bu alana dokumana eklenecek elektronik imza ile ilgili bir referans numarası verilecektir.
+     *
+     * @var string
      */
     public $ID;
 
     /**
-     * @var |Bulut|eFaturaUBL|SignatoryParty
+     * Bu alana dokumanı imzalayan imza sahibinin bilgileri eklenecektir.
+     *
+     * @var SignatoryParty
      */
     public $SignatoryParty;
 
     /**
-     * @var |Bulut|eFaturaUBL|DigitalSignatureAttachment
+     * Bu alana UBLExtensions alanına eklenen dijital imzaya referans eklenecektir.
+     *
+     * @var DigitalSignatureAttachment
      */
     public $DigitalSignatureAttachment;
 }

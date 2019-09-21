@@ -8,17 +8,13 @@
 
 namespace Bulut\eFaturaUBL;
 
-
-class SignatoryParty
+/**
+ * Bu alana dokumanı imzalayan imza sahibinin bilgileri eklenecektir.
+ *
+ * Class SignatoryParty
+ * @package Bulut\eFaturaUBL
+ */
+class SignatoryParty extends Party
 {
-
-    /**
-     * @var |Bulut|eFaturaUBL|PartyIdentification
-     */
-    public $PartyIdentification;
-
-    /**
-     * @var |Bulut|eFaturaUBL|PostalAddress
-     */
-    public $PostalAddress;
+    
 }

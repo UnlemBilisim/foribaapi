@@ -8,11 +8,12 @@
 
 namespace Bulut\eFaturaUBL;
 
-
-class AccountingCustomerParty
+/**
+ * Alıcı tarafın bilgilerini tutan elemandır.
+ *
+ * Class AccountingCustomerParty
+ * @package Bulut\eFaturaUBL
+ */
+class AccountingCustomerParty extends CustomerParty
 {
-    /**
-     * @var |Bulut|eFaturaUBL|Party
-     */
-    public $Party;
 }

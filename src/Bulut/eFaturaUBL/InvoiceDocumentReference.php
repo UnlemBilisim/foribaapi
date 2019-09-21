@@ -8,21 +8,13 @@
 
 namespace Bulut\eFaturaUBL;
 
-
-class InvoiceDocumentReference
+/**
+ * Önceki ilişkili fatura belgelerine referans bilgisi girilir. Örneğin iade edilen faturaya referans bu eleman ile verilir.
+ *
+ * Class InvoiceDocumentReference
+ * @package Bulut\eFaturaUBL
+ */
+class InvoiceDocumentReference extends DocumentReference
 {
-    /**
-     * @var |String
-     */
-    public $ID;
 
-    /**
-     * @var |String
-     */
-    public $IssueDate;
-
-    /**
-     * @var |String
-     */
-    public $DocumentType;
 }

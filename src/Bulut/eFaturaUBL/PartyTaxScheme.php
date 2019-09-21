@@ -8,11 +8,32 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Bu eleman aracılığıyla Tarafın(Party) vergi dairesi ile ilgili bilgiler verilir
+ *
+ * Class PartyTaxScheme
+ * @package Bulut\eFaturaUBL
+ */
 class PartyTaxScheme
 {
     /**
-     * @var |Bulut|eFaturaUBL|TaxScheme
+     * İhracat faturasında ilgili ülkedeki kurumun resmi ünvanı yazılır.
+     *
+     * @var string
+     */
+    public $RegistrationName;
+
+    /**
+     * İhracat faturasında ilgili ülkedeki kurumun vergi kayıt kodu yazılır.
+     *
+     * @var string
+     */
+    public $CompanyID;
+
+    /**
+     * Vergi Dairesi adı
+     *
+     * @var TaxScheme
      */
     public $TaxScheme;
 }

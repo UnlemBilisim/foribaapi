@@ -8,11 +8,18 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Karayolu taşımacılığında kullanılan araç bilgisini içerir
+ *
+ * Class RoadTransport
+ * @package Bulut\eFaturaUBL
+ */
 class RoadTransport
 {
     /**
-     * @var |Array (val = string, attrs = [schemeID="PLAKA"})
+     *  Plaka numarası girilir.
+     *
+     * @var string
      */
     public $LicensePlateID;
 }

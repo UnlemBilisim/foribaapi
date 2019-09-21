@@ -8,41 +8,67 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Şahısla ilgili bilgiler girilecektir.
+ *
+ * Class Person
+ * @package Bulut\eFaturaUBL
+ */
 class Person
 {
     /**
-     * @var |String
+     * Şahsın ilk adı girilecektir.
+     *
+     * @var string
      */
     public $FirstName;
 
     /**
-     * @var |String
+     * Şahsın soyadı girilecektir.
+     *
+     * @var string
      */
     public $FamilyName;
 
     /**
-     * @var |String
+     * Şahsın ünvanı girilecektir.
+     *
+     * @var string
      */
     public $Title;
 
     /**
-     * @var |String
+     * Şahsın diğer isimleri yazılacaktır.
+     *
+     * @var string
      */
     public $MiddleName;
 
     /**
-     * @var |String
+     * Şahsın adının ön eki varsa bu alana girilecektir.
+     *
+     * @var string
+     */
+    public $NameSuffix;
+
+    /**
+     * Şahsın milliyeti girilecektir.
+     *
+     * @var string
      */
     public $NationalityID;
 
     /**
-     * @var \Bulut\eFaturaUBL\FinancialAccount
+     * Şahsın hesap bilgileri girilecektir.
+     *
+     * @var FinancialAccount
      */
     public $FinancialAccount;
 
     /**
-     * @var \Bulut\eFaturaUBL\IdentityDocumentReference
+     * Şahsın kimlik dokümanına (Örneğin pasaport numarası buraya yazılacaktır) referans girilebilecektir.
+     *
+     * @var IdentityDocumentReference
      */
     public $IdentityDocumentReference;
 

@@ -8,55 +8,104 @@
 
 namespace Bulut\eFaturaUBL;
 
-
+/**
+ * Bu eleman adres bilgilerinin tanımlanmasında kullanılacaktır.
+ *
+ * Class Address
+ * @package Bulut\eFaturaUBL
+ */
 class Address
 {
-
     /**
-     * @var |String
+     * Mahalle, meydan, bulvar, cadde, sokak ve küme evlere karşılık gelecek şekilde,
+     * standart sayısal eşdeğer olarak TÜİK tarafından verilmiş olan “sabit tanımlama numarası” girilebilecektir.
+     *
+     * @var string
      */
     public $ID;
 
     /**
-     * @var |String
+     * Posta Kutusu girilecektir.
+     *
+     * @var
+     */
+    public $Postbox;
+
+    /**
+     * İç kapı numarası girilecektir.
+     *
+     * @var string
      */
     public $Room;
 
-
     /**
-     * @var |String
+     * Meydan/bulvar/cadde/sokak/küme evler/site adı bilgileri girilecektir.
+     *
+     * @var string
      */
     public $StreetName;
 
     /**
-     * @var |String
+     * Blok adı girilebilecektir.
+     *
+     * @var string
+     */
+    public $BlockName;
+
+    /**
+     * Bina girilebilecektir.
+     *
+     * @var string
      */
     public $BuildingName;
 
     /**
-     * @var |String
+     * Bina veya bloğa ait dış kapı numarası girilecektir.
+     *
+     * @var string
      */
     public $BuildingNumber;
+
     /**
-     * @var |String
+     * İlçe/semt adı bilgileri girilecektir.
+     *
+     * @var string
      */
     public $CitySubdivisionName;
+
     /**
-     * @var |String
+     * İl adı girilecektir.
+     *
+     * @var string
      */
     public $CityName;
+
     /**
-     * @var |String
+     * Posta kod numarası girilecektir.
+     *
+     * @var string
      */
     public $PostalZone;
 
     /**
-     * @var |String
+     * Kasaba/köy/mezra/mevkii bilgileri girilecektir.
+     *
+     * @var string
      */
     public $Region;
 
     /**
-     * @var |Bulut|eFaturaUBL|Country
+     * Mahalle adı girilecektir.
+     *
+     * @var string
+     */
+    public $District;
+
+    /**
+     * Ülke
+     *
+     * @var Country
      */
     public $Country;
+
 }
