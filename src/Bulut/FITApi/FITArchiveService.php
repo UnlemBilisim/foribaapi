@@ -253,8 +253,6 @@ class FITArchiveService
         }
 
 
-         var_dump($xmlMake);
-
         $response = $this->client->request('POST', self::$URL, [
             'headers' => $this->headers,
             'body' => $xmlMake,
