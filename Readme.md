@@ -300,6 +300,12 @@ $invoice_AccountCustomerParty_Party_Name = new \Bulut\eFaturaUBL\PartyName();
 $invoice_AccountCustomerParty_Party_Name->Name = "GIB";
 $invoice_AccountCustomerParty_Party->PartyName = $invoice_AccountCustomerParty_Party_Name;
 
+# Müşteri eğer gerçek kişi (şahıs şirketi) ise adı ve soyadı gönderilir.
+$invoice_AccountCustomerParty_Party_Person = new \Bulut\eFaturaUBL\Person();
+$invoice_AccountCustomerParty_Party_Person->FirstName = "ADI";
+$invoice_AccountCustomerParty_Party_Person->FamilyName = "SOYADI";
+$invoice_AccountCustomerParty_Party->Person = $invoice_AccountCustomerParty_Party_Person;
+
 $invoice_AccountCustomerParty_Party_PostalAdd = new \Bulut\eFaturaUBL\PostalAddress();
 $invoice_AccountCustomerParty_Party_PostalAdd->Room = "kapi no";
 $invoice_AccountCustomerParty_Party_PostalAdd->StreetName = "cadde";
