@@ -418,7 +418,7 @@ if($zip->open($destination,ZIPARCHIVE::CREATE) !== true) {
     return false;
 }
 
-$zip->addFromString($uuid.'.xml', $xml);
+$zip->addFromString($uuid.'.xml', $xml->getInvoiceResponseXML());
 $zip->close();
 
 
