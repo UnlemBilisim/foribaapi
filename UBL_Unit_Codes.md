@@ -1,3 +1,6 @@
+REF: https://docs.oasis-open.org/ubl/os-UBL-2.1/cva/UBL-DefaultDTQ-2.1.html
+
+
 | CODE| DESCRIPTION                                                          |
 |-----|----------------------------------------------------------------------|
 | 04  | small spray                                                          |
