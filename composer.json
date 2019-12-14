@@ -1,12 +1,17 @@
 {
-  "name": "unlembilisim/foribaapi",
-  "description": "Fit solutions efatura api..",
-  "keywords" : ["efatura", "earsiv","api", "foriba"],
+  "name": "ahmeti/foribaapi",
+  "description": "Sovos Foriba E-Fatura Api",
+  "keywords" : ["efatura", "earsiv", "api", "sovos", "foriba"],
   "authors": [
     {
       "name": "Orhan Gazi Başlı",
       "email": "obasli@unlembilisim.com",
       "homepage": "http://unlembilisim.com/"
+    },
+    {
+      "name": "Ahmet Imamoglu",
+      "email": "ahmet363@gmail.com",
+      "homepage": "https://ahmetimamoglu.com.tr/"
     }
   ],
   "require": {
