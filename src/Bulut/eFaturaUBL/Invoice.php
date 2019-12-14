@@ -99,6 +99,11 @@ class Invoice
     public $AccountingCustomerParty;
 
     /**
+     * @var \Bulut\eFaturaUBL\AllowanceCharge
+     */
+    public $AllowanceCharge;
+
+    /**
      * @var |Bulut|eFaturaUBL|TaxTotal
      */
     public $TaxTotal;
@@ -117,12 +122,6 @@ class Invoice
      * @var \Bulut\eFaturaUBL\PaymentMeans
      */
     public $PaymentMeans;
-
-    /**
-     * @var \Bulut\eFaturaUBL\AllowanceCharge
-     */
-    public $AllowanceCharge;
-
 
     /**
      * @var \Bulut\eFaturaUBL\Delivery
