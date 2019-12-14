@@ -61,8 +61,13 @@ class XMLHelper
                     }
 
                 }else{
-                    if(!empty($val))
-                        $xml .= '<cbc:'.$key.'>'.$val.'</cbc:'.$key.'>';
+                    if(!is_null($val)){
+                        if($val === ''){
+                            $xml .= '<cbc:'.$key.' />';
+                        }else{
+                            $xml .= '<cbc:'.$key.'>'.$val.'</cbc:'.$key.'>';
+                        }
+                    }
                 }
 
             }
