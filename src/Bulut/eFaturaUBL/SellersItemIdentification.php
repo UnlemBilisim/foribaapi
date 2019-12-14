@@ -16,4 +16,9 @@ namespace Bulut\eFaturaUBL;
  */
 class SellersItemIdentification extends ItemIdentification
 {
+    /**
+     *
+     * @var string
+     */
+    public $ID;
 }
