@@ -252,6 +252,9 @@ class FITArchiveService
             $xmlMake = str_replace(['get:', ':get'],['inv:', ':inv'], $xmlMake);
         }
 
+        if(get_class($request) == GetInvoiceDocument::class){
+            $xmlMake = str_replace(['get:', 'xmlns:get'],['inv:', 'xmlns:inv'], $xmlMake);
+        }
 
         $response = $this->client->request('POST', self::$URL, [
             'headers' => $this->headers,
