@@ -12,7 +12,7 @@ class GetSignedInvoice
     public $soapAction = "getSignedInvoice";
     public $methodName = "getSignedInvoiceRequestType";
     public $prefix = false;
-    public $namespace = "";
+    public $namespace = "http://fitcons.com/earchive/invoice";
 
     public $UUID;
     public $vkn;
