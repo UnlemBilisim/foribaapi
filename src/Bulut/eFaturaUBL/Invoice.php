@@ -69,6 +69,11 @@ class Invoice
     public $LineCountNumeric;
 
     /**
+     * @var |Bulut|eFaturaUBL|OrderReference
+     */
+    public $OrderReference;
+
+    /**
      * @var |Bulut|eFaturaUBL|BillingReference
      */
     public $BillingReference;
