@@ -18,6 +18,7 @@
       "Bulut\\FITApi\\": "src/Bulut/FITApi/",
       "Bulut\\InvoiceService\\": "src/Bulut/InvoiceService/",
       "Bulut\\ArchiveService\\": "src/Bulut/ArchiveService/",
+      "Bulut\\SMMService\\": "src/Bulut/SMMService/",
       "Bulut\\eFaturaUBL\\": "src/Bulut/eFaturaUBL/",
       "Bulut\\Exceptions\\": "src/Bulut/Exceptions/"
     }
