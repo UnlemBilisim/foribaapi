@@ -708,7 +708,7 @@ function SendUBlInvArchive($xml, $uuid){
         $zip->close();
 
 
-        $sendUblRequest = new \Bulut\ArchiveService\SendInvoice();
+        $sendUblRequest = new \Bulut\ArchiveService\SendDocument();
         $sendUblRequest->setSenderID(getSession("vknTckn"));
         $sendUblRequest->setHash(md5_file($destination));
         $sendUblRequest->setFileName($rand.'.zip');

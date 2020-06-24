@@ -219,12 +219,16 @@ class FITInvoiceService {
         unset($get_variables['methodName']);
         unset($get_variables['soapAction']);
         $xmlMake = $this->makeXml($methodName, $get_variables);
+
+        logger($xmlMake);
+
         $this->headers['SOAPAction'] = $soapAction;
         $this->headers['Content-Length'] = strlen($xmlMake);
         $response = $this->client->request('POST', self::$URL, [
             'headers' => $this->headers,
             'body' => $xmlMake,
-            'http_errors' => false
+            'http_errors' => false,
+            'verify' => false
         ]);
         return $response->getBody()->getContents();
     }
@@ -319,7 +323,9 @@ class FITInvoiceService {
      */
     public function GetEnvelopeStatusRequest(GetEnvelopeStatus $request){
         $responseText = $this->request($request);
+        var_dump($responseText);
         $soap = $this->getXml($responseText);
+        
         $ublList = $soap->xpath('//s:Body')[0];
         $list = [];
         foreach ($ublList->getEnvelopeStatusResponse->Response as $status){
@@ -337,6 +343,7 @@ class FITInvoiceService {
      */
     public function SendUBLRequest(SendUBL $request){
         $responseText = $this->request($request);
+        logger($responseText);
         $soap = $this->getXml($responseText);
         $ublList = $soap->xpath('//s:Body')[0];
         $list = [];

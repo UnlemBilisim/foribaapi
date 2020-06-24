@@ -9,37 +9,21 @@
 namespace Bulut\FITApi;
 
 
-use Bulut\ArchiveService\GetReportData;
-use Bulut\ArchiveService\GetReportDataResponse;
-use Bulut\ArchiveService\GetReportList;
-use Bulut\ArchiveService\GetReportListRequest;
-use Bulut\ArchiveService\GetReportListResponse;
-use Bulut\ArchiveService\GetReportStatus;
-use Bulut\ArchiveService\GetReportStatusResponse;
 use Bulut\Exceptions\GlobalForibaException;
 use Bulut\Exceptions\SchemaValidationException;
 use Bulut\Exceptions\UnauthorizedException;
+use Bulut\SMMService\CancelDocument;
+use Bulut\SMMService\CancelDocumentResponse;
+use Bulut\SMMService\GetDocument;
+use Bulut\SMMService\GetDocumentResponse;
+use Bulut\SMMService\SendDocument;
+use Bulut\SMMService\SendDocumentResponse;
 use GuzzleHttp\Client;
-use Bulut\ArchiveService\CancelDocument;
-use Bulut\ArchiveService\CancelDocumentResponse;
-use Bulut\ArchiveService\GetSignedInvoice;
-use Bulut\ArchiveService\GetSignedInvoiceResponse;
-use Bulut\ArchiveService\GetUserList;
-use Bulut\ArchiveService\GetUsertListResponse;
-use Bulut\ArchiveService\GetInvoiceDocument;
-use Bulut\ArchiveService\GetInvoiceDocumentResponse;
-use Bulut\ArchiveService\RetriggerOperation;
-use Bulut\ArchiveService\RetriggerOperationResponse;
-use Bulut\ArchiveService\SendEnvelope;
-use Bulut\ArchiveService\SendEnvelopeResponse;
-use Bulut\ArchiveService\SendDocument;
-use Bulut\ArchiveService\SendDocumentResponse;
 
-
-class FITArchiveService
+class FITSMMService
 {
-    private static $TEST_URL = "https://earsivwstest.fitbulut.com/ClientEArsivServicesPort.svc";
-    private static $PROD_URL = "https://earsivws.fitbulut.com/ClientEArsivServicesPort.svc";
+    private static $TEST_URL = "https://earsivwstest.fitbulut.com/ClientESmmServicesPort.svc";
+    private static $PROD_URL = "https://earsivws.fitbulut.com/ClientESmmServicesPort.svc";
     private static $URL = "";
 
     private  $client;
@@ -201,7 +185,7 @@ class FITArchiveService
         foreach ($arr as $key => $val){
 
             if(is_array($val)){
-                $pathClass = "\\Bulut\\ArchiveService\\".$key;
+                $pathClass = "\\Bulut\\SMMService\\".$key;
                 $nobje = new $pathClass();
 
                 foreach ($val as $key2 => $val2){
@@ -241,17 +225,16 @@ class FITArchiveService
 
 
         if(get_class($request) == CancelDocument::class){
-            $xmlMake = str_replace(['get:', ':get'],['inv:', ':inv'], $xmlMake);
+            $xmlMake = str_replace(['get:', ':get'],['esmm:', ':esmm'], $xmlMake);
         }
 
         if(get_class($request) == SendDocument::class){
-            $xmlMake = str_replace(['get:', ':get'],['inv:', ':inv'], $xmlMake);
+            $xmlMake = str_replace(['get:', ':get'],['esmm:', ':esmm'], $xmlMake);
         }
 
-        if(get_class($request) == SendEnvelope::class){
-            $xmlMake = str_replace(['get:', ':get'],['inv:', ':inv'], $xmlMake);
+        if(get_class($request) == GetDocument::class){
+            $xmlMake = str_replace(['get:', ':get'],['esmm:', ':esmm'], $xmlMake);
         }
-
 
         $response = $this->client->request('POST', self::$URL, [
             'headers' => $this->headers,
@@ -261,119 +244,31 @@ class FITArchiveService
         return $response->getBody()->getContents();
     }
 
-    public function GetInvoiceDocumentRequest(GetInvoiceDocument $request){
+    public function GetDocumentRequest(GetDocument $request){
         $responseText = $this->request($request);
         $soap = $this->getXml($responseText);
         $responseData = $soap->xpath('//s:Body')[0];
-        $responseObj = new GetInvoiceDocumentResponse();
-        $this->fillObj($responseObj, $responseData->getInvoiceDocumentResponseType);
+        $responseObj = new GetDocumentResponse();
+        $this->fillObj($responseObj, $responseData->getDocumentResponse->getDocumentResponse);
         return $responseObj;
     }
 
-    public function GetSignedInvoiceRequest(GetSignedInvoice $request){
-        $responseText = $this->request($request);
-        $soap = $this->getXml($responseText);
-        $responseData = $soap->xpath('//s:Body')[0];
-        $responseObj = new GetSignedInvoiceResponse();
-        $this->fillObj($responseObj, $responseData->getSignedInvoiceResponseType);
-
-        return $responseObj;
-    }
-
-    public function GetUserListRequest(GetUserList $request){
-        $responseText = $this->request($request);
-        $soap = $this->getXml($responseText);
-        $responseData = $soap->xpath('//s:Body')[0];
-        $responseObj = new GetUsertListResponse();
-        $this->fillObj($responseObj, $responseData->getUserListResponse);
-
-        return $responseObj;
-    }
-
-    public function GetRetriggerOperationRequest(RetriggerOperation $request){
-        $responseText = $this->request($request);
-        $soap = $this->getXml($responseText);
-        $responseData = $soap->xpath('//s:Body')[0];
-        $responseObj = new RetriggerOperationResponse();
-        $this->fillObj($responseObj, $responseData->retriggerServiceResponse);
-
-        return $responseObj;
-    }
-
-    public function CancelInvoiceRequest(CancelDocument $request){
-        $responseText = $this->request($request);
-        $soap = $this->getXml($responseText);
-        $responseData = $soap->xpath('//s:Body')[0];
-        $responseObj = new CancelDocumentResponse();
-        $this->fillObj($responseObj, $responseData->invoiceCancellationServiceResponseType);
-
-        return $responseObj;
-    }
-
-    public function SendInvoiceRequest(SendDocument $request){
+    public function SendDocumentRequest(SendDocument $request){
         $responseText = $this->request($request);
         $soap = $this->getXml($responseText);
         $responseData = $soap->xpath('//s:Body')[0];
         $responseObj = new SendDocumentResponse();
-        $this->fillObj($responseObj, $responseData->sendInvoiceResponseType);
+        $this->fillObj($responseObj, $responseData->sendDocumentResponse->SendDocumentResponse);
 
         return $responseObj;
     }
 
-
-    public function SendEnvelopeRequest(SendEnvelope $request){
+    public function CancelDocumentRequest(CancelDocument $request){
         $responseText = $this->request($request);
         $soap = $this->getXml($responseText);
         $responseData = $soap->xpath('//s:Body')[0];
-        $responseObj = new SendEnvelopeResponse();
-        $this->fillObj($responseObj, $responseData->sendInvoiceResponseType);
-
-        return $responseObj;
-    }
-
-    public function GetReportList(GetReportList $request){
-        $responseText = $this->request($request);
-        $soap = $this->getXml($responseText);
-        $responseData = $soap->xpath('//s:Body')[0];
-
-        $responseObj = new GetReportListResponse();
-        $this->fillObj($responseObj, $responseData->getReportListResponse);
-
-        unset($responseObj->Reports->uuid);
-        unset($responseObj->Reports->tcknVkn);
-        unset($responseObj->Reports->periodCode);
-        unset($responseObj->Reports->sectionStartDate);
-        unset($responseObj->Reports->sectionEndDate);
-        unset($responseObj->Reports->partNumber);
-        unset($responseObj->Reports->invoiceCount);
-        unset($responseObj->Reports->invoiceTotalAmount);
-        unset($responseObj->Reports->cancelInvoiceCount);
-        unset($responseObj->Reports->calcelInvoiceTotalAmount);
-        unset($responseObj->Reports->gibStatus);
-
-        return $responseObj;
-    }
-
-    public function GetReportData(GetReportData $request){
-        $responseText = $this->request($request);
-
-        $soap = $this->getXml($responseText);
-        $responseData = $soap->xpath('//s:Body')[0];
-
-        $responseObj = new GetReportDataResponse();
-        $this->fillObj($responseObj, $responseData->getReportDataResponse);
-
-        return $responseObj;
-    }
-
-    public function GetReportStatus(GetReportStatus $request){
-        $responseText = $this->request($request);
-
-        $soap = $this->getXml($responseText);
-        $responseData = $soap->xpath('//s:Body')[0];
-
-        $responseObj = new GetReportStatusResponse();
-        $this->fillObj($responseObj, $responseData->getReportStatusResponseType);
+        $responseObj = new CancelDocumentResponse();
+        $this->fillObj($responseObj, $responseData->cancelDocumentResponse->cancelDocumentResponse);
 
         return $responseObj;
     }
