@@ -323,7 +323,6 @@ class FITInvoiceService {
      */
     public function GetEnvelopeStatusRequest(GetEnvelopeStatus $request){
         $responseText = $this->request($request);
-        var_dump($responseText);
         $soap = $this->getXml($responseText);
         
         $ublList = $soap->xpath('//s:Body')[0];
@@ -343,7 +342,6 @@ class FITInvoiceService {
      */
     public function SendUBLRequest(SendUBL $request){
         $responseText = $this->request($request);
-        logger($responseText);
         $soap = $this->getXml($responseText);
         $ublList = $soap->xpath('//s:Body')[0];
         $list = [];

@@ -20,10 +20,10 @@ use Bulut\SMMService\SendDocument;
 use Bulut\SMMService\SendDocumentResponse;
 use GuzzleHttp\Client;
 
-class FITSMMService
+class FITMMService
 {
-    private static $TEST_URL = "https://earsivwstest.fitbulut.com/ClientESmmServicesPort.svc";
-    private static $PROD_URL = "https://earsivws.fitbulut.com/ClientESmmServicesPort.svc";
+    private static $TEST_URL = "https://earsivwstest.fitbulut.com/ClientEMmServicesPort.svc";
+    private static $PROD_URL = "https://earsivws.fitbulut.com/ClientEMmServicesPort.svc";
     private static $URL = "";
 
     private  $client;

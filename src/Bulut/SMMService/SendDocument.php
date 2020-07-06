@@ -37,9 +37,9 @@ class SendDocument
     }
 
     /**
-     * @param array $SendDocDetails
+     * @param array|object $SendDocDetails
      */
-    public function setSendDocDetails(array $SendDocDetails)
+    public function setSendDocDetails($SendDocDetails)
     {
         $this->SendDocDetails = $SendDocDetails;
     }

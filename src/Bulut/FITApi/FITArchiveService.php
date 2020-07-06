@@ -20,8 +20,8 @@ use Bulut\Exceptions\GlobalForibaException;
 use Bulut\Exceptions\SchemaValidationException;
 use Bulut\Exceptions\UnauthorizedException;
 use GuzzleHttp\Client;
-use Bulut\ArchiveService\CancelDocument;
-use Bulut\ArchiveService\CancelDocumentResponse;
+use Bulut\ArchiveService\CancelInvoice;
+use Bulut\ArchiveService\CancelInvoiceResponse;
 use Bulut\ArchiveService\GetSignedInvoice;
 use Bulut\ArchiveService\GetSignedInvoiceResponse;
 use Bulut\ArchiveService\GetUserList;
@@ -32,8 +32,8 @@ use Bulut\ArchiveService\RetriggerOperation;
 use Bulut\ArchiveService\RetriggerOperationResponse;
 use Bulut\ArchiveService\SendEnvelope;
 use Bulut\ArchiveService\SendEnvelopeResponse;
-use Bulut\ArchiveService\SendDocument;
-use Bulut\ArchiveService\SendDocumentResponse;
+use Bulut\ArchiveService\SendInvoice;
+use Bulut\ArchiveService\SendInvoiceResponse;
 
 
 class FITArchiveService
@@ -240,11 +240,11 @@ class FITArchiveService
         $this->headers['Content-Length'] = strlen($xmlMake);
 
 
-        if(get_class($request) == CancelDocument::class){
+        if(get_class($request) == CancelInvoice::class){
             $xmlMake = str_replace(['get:', ':get'],['inv:', ':inv'], $xmlMake);
         }
 
-        if(get_class($request) == SendDocument::class){
+        if(get_class($request) == SendInvoice::class){
             $xmlMake = str_replace(['get:', ':get'],['inv:', ':inv'], $xmlMake);
         }
 
@@ -300,21 +300,21 @@ class FITArchiveService
         return $responseObj;
     }
 
-    public function CancelInvoiceRequest(CancelDocument $request){
+    public function CancelInvoiceRequest(CancelInvoice $request){
         $responseText = $this->request($request);
         $soap = $this->getXml($responseText);
         $responseData = $soap->xpath('//s:Body')[0];
-        $responseObj = new CancelDocumentResponse();
+        $responseObj = new CancelInvoiceResponse();
         $this->fillObj($responseObj, $responseData->invoiceCancellationServiceResponseType);
 
         return $responseObj;
     }
 
-    public function SendInvoiceRequest(SendDocument $request){
+    public function SendInvoiceRequest(SendInvoice $request){
         $responseText = $this->request($request);
         $soap = $this->getXml($responseText);
         $responseData = $soap->xpath('//s:Body')[0];
-        $responseObj = new SendDocumentResponse();
+        $responseObj = new SendInvoiceResponse();
         $this->fillObj($responseObj, $responseData->sendInvoiceResponseType);
 
         return $responseObj;
