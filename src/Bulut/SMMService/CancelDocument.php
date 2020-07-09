@@ -11,7 +11,7 @@ class CancelDocument
 {
     public $soapAction = "cancelDocument";
     public $methodName = "cancelDocumentRequest";
-    public $prefix = false;
+    public $prefix = true;
     public $namespace = "http://foriba.com/eSmm/";
 
     public $VKN_TCKN;
@@ -29,7 +29,7 @@ class CancelDocument
     /**
      * @param string $Branch
      */
-    public function setBranch(string $Branch)
+    public function setBranch($Branch)
     {
         $this->Branch = $Branch;
     }
@@ -37,7 +37,7 @@ class CancelDocument
     /**
      * @param array $CancelDocDetails
      */
-    public function setCancelDocDetails(array $CancelDocDetails)
+    public function setCancelDocDetails($CancelDocDetails)
     {
         $this->CancelDocDetails = $CancelDocDetails;
     }

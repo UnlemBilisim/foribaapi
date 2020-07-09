@@ -6,6 +6,14 @@
  * Time: 00:33
  */
 namespace Bulut\FITApi;
+use Bulut\DespatchService\GetDesEnvelopeStatus;
+use Bulut\DespatchService\GetDesEnvelopeStatusResponse;
+use Bulut\DespatchService\GetDesUBL;
+use Bulut\DespatchService\GetDesUBLList;
+use Bulut\DespatchService\GetDesUBLListResponse;
+use Bulut\DespatchService\GetDesUBLResponse;
+use Bulut\DespatchService\SendDespatch;
+use Bulut\DespatchService\SendDespatchResponse;
 use Bulut\Exceptions\GlobalForibaException;
 use Bulut\Exceptions\SchemaValidationException;
 use Bulut\Exceptions\UnauthorizedException;
@@ -24,9 +32,9 @@ use Bulut\InvoiceService\GetInvoiceViewResponse;
 use Bulut\InvoiceService\SendUBL;
 use Bulut\InvoiceService\SendUBLResponse;
 
-class FITInvoiceService {
-    private static $TEST_URL = "https://efaturawstest.fitbulut.com/ClientEInvoiceServices/ClientEInvoiceServicesPort.svc";
-    private static $PROD_URL = "https://efaturaws.fitbulut.com/ClientEInvoiceServices/ClientEInvoiceServicesPort.svc";
+class FITDespatchService {
+    private static $TEST_URL = "https://efaturawstest.fitbulut.com/ClientEDespatchServicePort.svc";
+    private static $PROD_URL = "https://efaturaws.fitbulut.com/ClientEDespatchServicePort.svc";
     private static $URL = "";
     private  $client;
     private $headers = [
@@ -35,7 +43,7 @@ class FITInvoiceService {
         'Cache-Control' =>  'no-cache',
         'Pragma' => 'no-cache'
     ];
-    private $soapXmlPref = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ein=\"http:/fitcons.com/eInvoice/\">
+    private $soapXmlPref = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ein=\"http://foriba.com/eDespatch/\">
            <soapenv:Header/>
            <soapenv:Body>
            %s
@@ -220,7 +228,6 @@ class FITInvoiceService {
         unset($get_variables['soapAction']);
         $xmlMake = $this->makeXml($methodName, $get_variables);
 
-
         $this->headers['SOAPAction'] = $soapAction;
         $this->headers['Content-Length'] = strlen($xmlMake);
         $response = $this->client->request('POST', self::$URL, [
@@ -233,37 +240,18 @@ class FITInvoiceService {
     }
 
     /**
-     * @param GetUserList $request
-     * @return array GetUserListResponse
+     * @param GetDesUBLList $request
+     * @return array GetDesUBLListResponse
      * @throws
      */
-    public function GetUserListRequest(GetUserList $request) //: GetUserListResponse
-    {
-        $responseText = $this->request($request);
-        $soap = $this->getXml($responseText);
-        $userlist = $soap->xpath('//s:Body')[0];
-        $list = [];
-        foreach ($userlist->getUserListResponse->User as $user){
-            $responseObj = new GetUserListResponse();
-            $this->fillObj($responseObj, $user);
-            $list[] = $responseObj;
-        }
-        return $list;
-    }
-
-    /**
-     * @param GetUblList $request
-     * @return array GetUblListResponse
-     * @throws
-     */
-    public function GetUblListRequest(GetUblList $request){
+    public function GetUblListRequest(GetDesUBLList $request){
         $responseText = $this->request($request);
 
         $soap = $this->getXml($responseText);
         $ublList = $soap->xpath('//s:Body')[0];
         $list = [];
-        foreach ($ublList->getUBLListResponse->UBLList as $ubl){
-            $responseObj = new GetUblListResponse();
+        foreach ($ublList->getDesUBLListResponse->UBLList as $ubl){
+            $responseObj = new GetDesUBLListResponse();
             $this->fillObj($responseObj, $ubl);
             $list[] = $responseObj;
         }
@@ -271,42 +259,28 @@ class FITInvoiceService {
     }
 
     /**
-     * @param GetInvoiceView $request
-     * @return GetInvoiceViewResponse
-     * @throws
-     */
-    public function GetInvoiceViewRequest(GetInvoiceView $request){
-        $responseText = $this->request($request);
-        $soap = $this->getXml($responseText);
-        $body = $soap->xpath('//s:Body')[0];
-        $responseObj = new GetInvoiceViewResponse();
-        $responseObj->DocData = (string)$body->getInvoiceViewResponse->DocData;
-        $responseObj->setDocType($request->DocType);
-        return $responseObj;
-    }
-    /**
-     * @param GetUbl $request
+     * @param GetDesUBL $request
      * @return array
      * @throws
      */
-    public function GetUblRequest(GetUbl $request){
+    public function GetUblRequest(GetDesUBL $request){
         $responseText = $this->request($request);
         $soap = $this->getXml($responseText);
         $ubl = $soap->xpath('//s:Body')[0];
         $list = [];
 
-        if(count($ubl->getUBLResponse->DocData) > 1){
+        if(count($ubl->getDesUBLResponse->DocData) > 1){
 
-            foreach ($ubl->getUBLResponse->DocData as $data){
+            foreach ($ubl->getDesUBLResponse->DocData as $data){
                 
-                $responseObj = new GetUblResponse();
+                $responseObj = new GetDesUBLResponse();
                 $responseObj->DocData = (string)$data;
                 $responseObj->setDocType($request->Parameters);
                 $list[] = $responseObj;
             }
         }else{
-            $responseObj = new GetUblResponse();
-            $responseObj->DocData = (string)$ubl->getUBLResponse->DocData;
+            $responseObj = new GetDesUBLResponse();
+            $responseObj->DocData = (string)$ubl->getDesUBLResponse->DocData;
             $responseObj->setDocType($request->Parameters);
             $list[] = $responseObj;
         }
@@ -316,18 +290,18 @@ class FITInvoiceService {
     }
 
     /**
-     * @param GetEnvelopeStatus $request
-     * @return array GetEnvelopeResponse
+     * @param GetDesEnvelopeStatus $request
+     * @return array GetDesEnvelopeStatusResponse
      * @throws
      */
-    public function GetEnvelopeStatusRequest(GetEnvelopeStatus $request){
+    public function GetDesEnvelopeStatusRequest(GetDesEnvelopeStatus $request){
         $responseText = $this->request($request);
         $soap = $this->getXml($responseText);
         
         $ublList = $soap->xpath('//s:Body')[0];
         $list = [];
-        foreach ($ublList->getEnvelopeStatusResponse->Response as $status){
-            $responseObj = new GetEnvelopeStatusResponse();
+        foreach ($ublList->getDesEnvelopeStatusResponse->Response as $status){
+            $responseObj = new GetDesEnvelopeStatusResponse();
             $this->fillObj($responseObj, $status);
             $list[] = $responseObj;
         }
@@ -335,17 +309,17 @@ class FITInvoiceService {
     }
 
     /**
-     * @param SendUBL $request
-     * @return array SendUBLResponse
+     * @param SendDespatch $request
+     * @return array SendDespatchResponse
      * @throws
      */
-    public function SendUBLRequest(SendUBL $request){
+    public function SendUBLRequest(SendDespatch $request){
         $responseText = $this->request($request);
         $soap = $this->getXml($responseText);
         $ublList = $soap->xpath('//s:Body')[0];
         $list = [];
-        foreach ($ublList->sendUBLResponse->Response as $status){
-            $responseObj = new SendUBLResponse();
+        foreach ($ublList->sendDesUBLResponse->Response as $status){
+            $responseObj = new SendDespatchResponse();
             $this->fillObj($responseObj, $status);
             $list[] = $responseObj;
         }

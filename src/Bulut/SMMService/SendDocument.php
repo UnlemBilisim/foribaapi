@@ -13,7 +13,7 @@ class SendDocument
 
     public $soapAction = "sendDocument";
     public $methodName = "sendDocumentRequest";
-    public $prefix = false;
+    public $prefix = true;
     public $namespace = "http://foriba.com/eSmm/";
 
     public $VKN_TCKN;

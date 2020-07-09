@@ -109,6 +109,8 @@ class FITSMMService
         foreach ($variables as $key => $val){
             if(is_object($val)){
                 $this->makeSubXml($val, $subXml, $prefix, $namespace);
+            } else if(is_array($val)){
+                $this->makeSubXml($val, $subXml, $prefix, $namespace);
             } else{
                 if(strlen($val) > 0)
                     $subXml .= '<'.($prefix ? $this->soapSubClassPrefix.':' : '').''.$key.'>'.(string)$val.'</'.($prefix ? $this->soapSubClassPrefix.':' : '').''.$key.'>';
@@ -144,6 +146,7 @@ class FITSMMService
         $treeXml = '<'.$this->soapSubClassPrefix.':'.$methodName.'>'.$subXml.'</'.$this->soapSubClassPrefix.':'.$methodName.'>';
         $replaced = str_replace('{namespace}', $namespace, $this->soapXmlPref);
         $mainXml = sprintf($replaced, $treeXml);
+
         return trim($mainXml);
 
     }
@@ -158,20 +161,19 @@ class FITSMMService
             $fault = $soap->xpath('//s:Body/s:Fault')[0];
             $fault_array = [];
             $this->xml2array($fault, $fault_array);
-
             if($fault->faultstring == "Unauthorized")
                 throw new UnauthorizedException($fault_array['faultstring'], (int)$fault_array['faultcode']);
             else if($fault->faultstring == "Şema validasyon hatası")
             {
                 if(isset($fault_array['detail'])){
-                    throw new SchemaValidationException(implode('","', $fault_array['detail']["processingFaultType"]));
+                    throw new SchemaValidationException(implode('","', $fault_array['detail']["message"]));
                 }
                 else
                     throw new SchemaValidationException('Bilinmeyen bir şema hatası oluştu.');
             }
 
-            $detail = (isset($fault_array['detail']) ? implode('","', $fault_array['detail']["processingFaultType"]) : '');
-            throw new GlobalForibaException("Fatal Error, Code : ".$fault_array['faultcode']." String : ".$fault_array['faultstring'].". Detail : \"".$detail.'""');
+            $detail = (isset($fault_array['detail']) ? (isset($fault_array['detail']['ProcessingFault']) ? $fault_array['detail']['ProcessingFault']["Message"] : '') : '');
+            throw new GlobalForibaException("Fatal Error, Code : ".$fault_array['faultcode']." String : ".$fault_array['faultstring'].' Detail: '.$detail);
         }
 
         return $soap;
@@ -219,10 +221,8 @@ class FITSMMService
         unset($get_variables['namespace']);
         $xmlMake = $this->makeXml($methodName, $get_variables, $prefix, $namespace);
 
-
         $this->headers['SOAPAction'] = $soapAction;
         $this->headers['Content-Length'] = strlen($xmlMake);
-
 
         if(get_class($request) == CancelDocument::class){
             $xmlMake = str_replace(['get:', ':get'],['esmm:', ':esmm'], $xmlMake);
@@ -242,7 +242,8 @@ class FITSMMService
             'http_errors' => false,
             'debug' => true
         ]);
-        return $response->getBody()->getContents();
+        $body = $response->getBody()->getContents();
+        return $body;
     }
 
     public function GetDocumentRequest(GetDocument $request){
