@@ -44,6 +44,9 @@ class FITInvoiceService {
     ";
     private $soapSubClassPrefix = "ein";
 
+    private $lastRequest;
+    private $lastResponse;
+
     /**
      * FITInvoiceService constructor.
      * @param array $options
@@ -61,6 +64,14 @@ class FITInvoiceService {
         $this->headers['Host'] = $parsed_url['host'];
         $this->headers['Authorization'] = "Basic ".$this->getAuth($options['username'], $options['password']);
         $this->client = new Client();
+    }
+
+    public function getLastRequest(){
+        return $this->lastRequest;
+    }
+
+    public function getLastResponse(){
+        return $this->lastResponse;
     }
 
     /**
@@ -219,14 +230,20 @@ class FITInvoiceService {
         unset($get_variables['methodName']);
         unset($get_variables['soapAction']);
         $xmlMake = $this->makeXml($methodName, $get_variables);
+
+        $this->lastRequest = $xmlMake;
+
         $this->headers['SOAPAction'] = $soapAction;
         $this->headers['Content-Length'] = strlen($xmlMake);
         $response = $this->client->request('POST', self::$URL, [
             'headers' => $this->headers,
             'body' => $xmlMake,
-            'http_errors' => false
+            'http_errors' => false,
+            'verify' => false
         ]);
-        return $response->getBody()->getContents();
+        $body = $response->getBody()->getContents();
+        $this->lastResponse = $body;
+        return $body;
     }
 
     /**
@@ -295,7 +312,7 @@ class FITInvoiceService {
         if(count($ubl->getUBLResponse->DocData) > 1){
 
             foreach ($ubl->getUBLResponse->DocData as $data){
-                
+
                 $responseObj = new GetUblResponse();
                 $responseObj->DocData = (string)$data;
                 $responseObj->setDocType($request->Parameters);
@@ -320,6 +337,7 @@ class FITInvoiceService {
     public function GetEnvelopeStatusRequest(GetEnvelopeStatus $request){
         $responseText = $this->request($request);
         $soap = $this->getXml($responseText);
+
         $ublList = $soap->xpath('//s:Body')[0];
         $list = [];
         foreach ($ublList->getEnvelopeStatusResponse->Response as $status){

@@ -61,6 +61,9 @@ class FITArchiveService
 
     private $soapSubClassPrefix = "get";
 
+    private $lastRequest;
+    private $lastResponse;
+
     /**
      * FITArchiveService constructor.
      * @param array $options
@@ -81,6 +84,14 @@ class FITArchiveService
         $this->headers['Authorization'] = "Basic ".$this->getAuth($options['username'], $options['password']);
 
         $this->client = new Client();
+    }
+
+    public function getLastRequest(){
+        return $this->lastRequest;
+    }
+
+    public function getLastResponse(){
+        return $this->lastResponse;
     }
 
     /**
@@ -251,14 +262,16 @@ class FITArchiveService
         if(get_class($request) == SendEnvelope::class){
             $xmlMake = str_replace(['get:', ':get'],['inv:', ':inv'], $xmlMake);
         }
-
+        $this->lastRequest = $xmlMake;
 
         $response = $this->client->request('POST', self::$URL, [
             'headers' => $this->headers,
             'body' => $xmlMake,
             'http_errors' => false
         ]);
-        return $response->getBody()->getContents();
+        $body = $response->getBody()->getContents();
+        $this->lastResponse = $body;
+        return $body;
     }
 
     public function GetInvoiceDocumentRequest(GetInvoiceDocument $request){
