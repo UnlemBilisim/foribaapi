@@ -17,7 +17,7 @@ if(isset($_GET['v'])){
     $getDocument->setCancelDate(date('Y-m-d'));
     $getDocument->setCustInvID($_POST['custInvID']);
 
-    $cancelService = new \Bulut\ArchiveService\CancelInvoice();
+    $cancelService = new \Bulut\ArchiveService\CancelDocument();
     $cancelService->setInvoiceCancelInfoTypeList([$getDocument]);
 
     $archive = new \Bulut\FITApi\FITArchiveService(['username'=> getSession("ws_kuladi"),'password'=> getSession("ws_sifre")], true);

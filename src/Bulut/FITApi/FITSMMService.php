@@ -9,37 +9,21 @@
 namespace Bulut\FITApi;
 
 
-use Bulut\ArchiveService\GetReportData;
-use Bulut\ArchiveService\GetReportDataResponse;
-use Bulut\ArchiveService\GetReportList;
-use Bulut\ArchiveService\GetReportListRequest;
-use Bulut\ArchiveService\GetReportListResponse;
-use Bulut\ArchiveService\GetReportStatus;
-use Bulut\ArchiveService\GetReportStatusResponse;
 use Bulut\Exceptions\GlobalForibaException;
 use Bulut\Exceptions\SchemaValidationException;
 use Bulut\Exceptions\UnauthorizedException;
+use Bulut\SMMService\CancelDocument;
+use Bulut\SMMService\CancelDocumentResponse;
+use Bulut\SMMService\GetDocument;
+use Bulut\SMMService\GetDocumentResponse;
+use Bulut\SMMService\SendDocument;
+use Bulut\SMMService\SendDocumentResponse;
 use GuzzleHttp\Client;
-use Bulut\ArchiveService\CancelInvoice;
-use Bulut\ArchiveService\CancelInvoiceResponse;
-use Bulut\ArchiveService\GetSignedInvoice;
-use Bulut\ArchiveService\GetSignedInvoiceResponse;
-use Bulut\ArchiveService\GetUserList;
-use Bulut\ArchiveService\GetUsertListResponse;
-use Bulut\ArchiveService\GetInvoiceDocument;
-use Bulut\ArchiveService\GetInvoiceDocumentResponse;
-use Bulut\ArchiveService\RetriggerOperation;
-use Bulut\ArchiveService\RetriggerOperationResponse;
-use Bulut\ArchiveService\SendEnvelope;
-use Bulut\ArchiveService\SendEnvelopeResponse;
-use Bulut\ArchiveService\SendInvoice;
-use Bulut\ArchiveService\SendInvoiceResponse;
 
-
-class FITArchiveService
+class FITSMMService
 {
-    private static $TEST_URL = "https://earsivwstest.fitbulut.com/ClientEArsivServicesPort.svc";
-    private static $PROD_URL = "https://earsivws.fitbulut.com/ClientEArsivServicesPort.svc";
+    private static $TEST_URL = "https://earsivwstest.fitbulut.com/ClientESmmServicesPort.svc";
+    private static $PROD_URL = "https://earsivws.fitbulut.com/ClientESmmServicesPort.svc";
     private static $URL = "";
 
     private  $client;
@@ -136,6 +120,8 @@ class FITArchiveService
         foreach ($variables as $key => $val){
             if(is_object($val)){
                 $this->makeSubXml($val, $subXml, $prefix, $namespace);
+            } else if(is_array($val)){
+                $this->makeSubXml($val, $subXml, $prefix, $namespace);
             } else{
                 if(strlen($val) > 0)
                     $subXml .= '<'.($prefix ? $this->soapSubClassPrefix.':' : '').''.$key.'>'.(string)$val.'</'.($prefix ? $this->soapSubClassPrefix.':' : '').''.$key.'>';
@@ -171,6 +157,7 @@ class FITArchiveService
         $treeXml = '<'.$this->soapSubClassPrefix.':'.$methodName.'>'.$subXml.'</'.$this->soapSubClassPrefix.':'.$methodName.'>';
         $replaced = str_replace('{namespace}', $namespace, $this->soapXmlPref);
         $mainXml = sprintf($replaced, $treeXml);
+
         return trim($mainXml);
 
     }
@@ -185,20 +172,19 @@ class FITArchiveService
             $fault = $soap->xpath('//s:Body/s:Fault')[0];
             $fault_array = [];
             $this->xml2array($fault, $fault_array);
-
             if($fault->faultstring == "Unauthorized")
                 throw new UnauthorizedException($fault_array['faultstring'], (int)$fault_array['faultcode']);
             else if($fault->faultstring == "Şema validasyon hatası")
             {
                 if(isset($fault_array['detail'])){
-                    throw new SchemaValidationException(implode('","', $fault_array['detail']["processingFaultType"]));
+                    throw new SchemaValidationException(implode('","', $fault_array['detail']["message"]));
                 }
                 else
                     throw new SchemaValidationException('Bilinmeyen bir şema hatası oluştu.');
             }
 
-            $detail = (isset($fault_array['detail']) ? implode('","', $fault_array['detail']["processingFaultType"]) : '');
-            throw new GlobalForibaException("Fatal Error, Code : ".$fault_array['faultcode']." String : ".$fault_array['faultstring'].". Detail : \"".$detail.'""');
+            $detail = (isset($fault_array['detail']) ? (isset($fault_array['detail']['ProcessingFault']) ? $fault_array['detail']['ProcessingFault']["Message"] : '') : '');
+            throw new GlobalForibaException("Fatal Error, Code : ".$fault_array['faultcode']." String : ".$fault_array['faultstring'].' Detail: '.$detail);
         }
 
         return $soap;
@@ -212,7 +198,7 @@ class FITArchiveService
         foreach ($arr as $key => $val){
 
             if(is_array($val)){
-                $pathClass = "\\Bulut\\ArchiveService\\".$key;
+                $pathClass = "\\Bulut\\SMMService\\".$key;
                 $nobje = new $pathClass();
 
                 foreach ($val as $key2 => $val2){
@@ -246,147 +232,59 @@ class FITArchiveService
         unset($get_variables['namespace']);
         $xmlMake = $this->makeXml($methodName, $get_variables, $prefix, $namespace);
 
-
         $this->headers['SOAPAction'] = $soapAction;
         $this->headers['Content-Length'] = strlen($xmlMake);
 
-
-        if(get_class($request) == CancelInvoice::class){
-            $xmlMake = str_replace(['get:', ':get'],['inv:', ':inv'], $xmlMake);
+        if(get_class($request) == CancelDocument::class){
+            $xmlMake = str_replace(['get:', ':get'],['esmm:', ':esmm'], $xmlMake);
         }
 
-        if(get_class($request) == SendInvoice::class){
-            $xmlMake = str_replace(['get:', ':get'],['inv:', ':inv'], $xmlMake);
+        if(get_class($request) == SendDocument::class){
+            $xmlMake = str_replace(['get:', ':get'],['esmm:', ':esmm'], $xmlMake);
         }
 
-        if(get_class($request) == SendEnvelope::class){
-            $xmlMake = str_replace(['get:', ':get'],['inv:', ':inv'], $xmlMake);
+        if(get_class($request) == GetDocument::class){
+            $xmlMake = str_replace(['get:', ':get'],['esmm:', ':esmm'], $xmlMake);
         }
+
         $this->lastRequest = $xmlMake;
 
         $response = $this->client->request('POST', self::$URL, [
             'headers' => $this->headers,
             'body' => $xmlMake,
-            'http_errors' => false
+            'http_errors' => false,
+            'debug' => true
         ]);
         $body = $response->getBody()->getContents();
         $this->lastResponse = $body;
         return $body;
     }
 
-    public function GetInvoiceDocumentRequest(GetInvoiceDocument $request){
+    public function GetDocumentRequest(GetDocument $request){
         $responseText = $this->request($request);
         $soap = $this->getXml($responseText);
         $responseData = $soap->xpath('//s:Body')[0];
-        $responseObj = new GetInvoiceDocumentResponse();
-        $this->fillObj($responseObj, $responseData->getInvoiceDocumentResponseType);
+        $responseObj = new GetDocumentResponse();
+        $this->fillObj($responseObj, $responseData->getDocumentResponse->getDocumentResponse);
         return $responseObj;
     }
 
-    public function GetSignedInvoiceRequest(GetSignedInvoice $request){
+    public function SendDocumentRequest(SendDocument $request){
         $responseText = $this->request($request);
         $soap = $this->getXml($responseText);
         $responseData = $soap->xpath('//s:Body')[0];
-        $responseObj = new GetSignedInvoiceResponse();
-        $this->fillObj($responseObj, $responseData->getSignedInvoiceResponseType);
-
-        return $responseObj;
-    }
-
-    public function GetUserListRequest(GetUserList $request){
-        $responseText = $this->request($request);
-        $soap = $this->getXml($responseText);
-        $responseData = $soap->xpath('//s:Body')[0];
-        $responseObj = new GetUsertListResponse();
-        $this->fillObj($responseObj, $responseData->getUserListResponse);
+        $responseObj = new SendDocumentResponse();
+        $this->fillObj($responseObj, $responseData->sendDocumentResponse->SendDocumentResponse);
 
         return $responseObj;
     }
 
-    public function GetRetriggerOperationRequest(RetriggerOperation $request){
+    public function CancelDocumentRequest(CancelDocument $request){
         $responseText = $this->request($request);
         $soap = $this->getXml($responseText);
         $responseData = $soap->xpath('//s:Body')[0];
-        $responseObj = new RetriggerOperationResponse();
-        $this->fillObj($responseObj, $responseData->retriggerServiceResponse);
-
-        return $responseObj;
-    }
-
-    public function CancelInvoiceRequest(CancelInvoice $request){
-        $responseText = $this->request($request);
-        $soap = $this->getXml($responseText);
-        $responseData = $soap->xpath('//s:Body')[0];
-        $responseObj = new CancelInvoiceResponse();
-        $this->fillObj($responseObj, $responseData->invoiceCancellationServiceResponseType);
-
-        return $responseObj;
-    }
-
-    public function SendInvoiceRequest(SendInvoice $request){
-        $responseText = $this->request($request);
-        $soap = $this->getXml($responseText);
-        $responseData = $soap->xpath('//s:Body')[0];
-        $responseObj = new SendInvoiceResponse();
-        $this->fillObj($responseObj, $responseData->sendInvoiceResponseType);
-
-        return $responseObj;
-    }
-
-
-    public function SendEnvelopeRequest(SendEnvelope $request){
-        $responseText = $this->request($request);
-        $soap = $this->getXml($responseText);
-        $responseData = $soap->xpath('//s:Body')[0];
-        $responseObj = new SendEnvelopeResponse();
-        $this->fillObj($responseObj, $responseData->sendInvoiceResponseType);
-
-        return $responseObj;
-    }
-
-    public function GetReportList(GetReportList $request){
-        $responseText = $this->request($request);
-        $soap = $this->getXml($responseText);
-        $responseData = $soap->xpath('//s:Body')[0];
-
-        $responseObj = new GetReportListResponse();
-        $this->fillObj($responseObj, $responseData->getReportListResponse);
-
-        unset($responseObj->Reports->uuid);
-        unset($responseObj->Reports->tcknVkn);
-        unset($responseObj->Reports->periodCode);
-        unset($responseObj->Reports->sectionStartDate);
-        unset($responseObj->Reports->sectionEndDate);
-        unset($responseObj->Reports->partNumber);
-        unset($responseObj->Reports->invoiceCount);
-        unset($responseObj->Reports->invoiceTotalAmount);
-        unset($responseObj->Reports->cancelInvoiceCount);
-        unset($responseObj->Reports->calcelInvoiceTotalAmount);
-        unset($responseObj->Reports->gibStatus);
-
-        return $responseObj;
-    }
-
-    public function GetReportData(GetReportData $request){
-        $responseText = $this->request($request);
-
-        $soap = $this->getXml($responseText);
-        $responseData = $soap->xpath('//s:Body')[0];
-
-        $responseObj = new GetReportDataResponse();
-        $this->fillObj($responseObj, $responseData->getReportDataResponse);
-
-        return $responseObj;
-    }
-
-    public function GetReportStatus(GetReportStatus $request){
-        $responseText = $this->request($request);
-
-        $soap = $this->getXml($responseText);
-        $responseData = $soap->xpath('//s:Body')[0];
-
-        $responseObj = new GetReportStatusResponse();
-        $this->fillObj($responseObj, $responseData->getReportStatusResponseType);
+        $responseObj = new CancelDocumentResponse();
+        $this->fillObj($responseObj, $responseData->cancelDocumentResponse->cancelDocumentResponse);
 
         return $responseObj;
     }
