@@ -13,7 +13,7 @@ class GetInvoiceDocument
     public $soapAction = "getInvoiceDocument";
     public $methodName = "getInvoiceDocumentRequestType";
     public $prefix = false;
-    public $namespace = "";
+    public $namespace = "http://fitcons.com/earchive/invoice";
 
     public $UUID;
     public $vkn;
