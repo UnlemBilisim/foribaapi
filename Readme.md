@@ -1,6 +1,6 @@
 ﻿# Foriba E-Fatura ve E-Arşiv SDK
 
-Forabi eFatura ve eArşiv PHP SDK. PHP ile eArşiv ve eFatura gönderim klavuzu.
+Foriba eFatura ve eArşiv PHP SDK. PHP ile eArşiv ve eFatura gönderim klavuzu.
 ## İçerik
 
  
